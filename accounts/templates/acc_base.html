@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        
+        
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon4.png' %}" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/admin_login.css' %}" rel="stylesheet" />
+        {% block title %}
+        <title> Sample Title </title>
+        {% endblock title %}
+        <style>
+            body{
+                display: flex;
+                min-height: 100vh;
+                flex-direction: column;
+                font-family: 'Lato', sans-serif;   
+                
+                color:white;
+            }
+            nav{
+                color:white;
+                
+                {% comment %} border-bottom:1px ridge grey !important; {% endcomment %}
+            }
+            .content {
+                flex: 1;
+                padding-top:50px;
+             }
+             footer{
+                border-top:1px solid grey !important;
+                width:100%;
+                color:#ffd60a !important;
+                font-family: "Lucida Console", "Courier New", monospace;
+                opacity: 0.5;
+
+             }
+             .footerstyle{
+                
+             }
+             .bgdark{
+                background-color:#000814 !important;
+             }
+             #movie-content{padding-top:50px;padding-bottom:30px}
+             .norounds{
+                border-radius: 0px;
+             }
+        </style>
+    </head>
+    <body class="bgdark" >
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark bgdark">
+            <div class="container px-4 px-lg-5 bg-dark bgdark">
+                <a class="navbar-brand" href="/">BookMyTiket</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
+                        {% comment %} <li class="nav-item"><a class="nav-link" href="#!">My bookings</a></li> {% endcomment %}
+                        {% comment %} <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#!">All Products</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                            </ul>
+                        </li> {% endcomment %}
+                    </ul>
+                    {% comment %} <form class="d-flex"> {% endcomment %}
+                        {% comment %} <button class="btn btn-outline-dark" > {% endcomment %}
+                            {% comment %} <i class="bi-user-fill me-1"></i> {% endcomment %}
+                            {% comment %} {% if user.is_authenticated %}
+                            <a href="/accounts/logout" class="btn btn-warning" >logout</a>
+                            {% else %}
+                            <a href="/accounts/login" class="btn btn-warning" >login/signup</a>
+                            {% endif %} {% endcomment %}
+                            {% comment %} <span class="badge bg-dark text-white ms-1 rounded-pill">0</span> {% endcomment %}
+                        {% comment %} </button> {% endcomment %}
+                    {% comment %} </form> {% endcomment %}
+                </div>
+            </div>
+        </nav>
+        <!-- Header-->
+        
+
+        <!-- Section-->
+        <main class="content" >
+
+            {% block content %}
+
+            <h1> some content</h1>
+
+            {% endblock content %}
+
+            <!-- Raw Output  start -->
+
+            {% comment %} <p>The queryset object:</p>
+            {{ films }} {% endcomment %}
+            
+            <!-- end -->
+        
+
+        {% comment %} <div class="container" id="movie-content">
+            
+            
+            <div class="row">
+                
+                <div id="movie-poster" class="col-md-4 d-flex justify-content-center">
+                    <div class="card text-center border-0" style="width: 18rem;">
+                        <img class="card-img-top img-thumbnail" src="{{ film.url }}" alt="Card image cap">
+                        <div class="card-body">
+                          
+                          <a href="#" class="btn btn-dark">Get Tickets</a>
+                        </div>
+                    </div>
+                
+                
+                </div>
+                
+                <div id="movie-info" class="col-md-8 " data-movie-id="46306">
+
+                    <div class="hidden-xs">
+                        <h1>{{ film.movie_name }}</h1>
+                        <h2>{{ film.movie_year }}</h2>
+                        <h3>{{ film.movie_lang }}</h3>
+                    </div>
+                    <p class="hidden-xs hidden-sm">
+                        <em class="pull-left">Available at &nbsp;</em>
+                        <br>
+                        <a href="#" class="btn btn-primary" rel="nofollow" >{{ film.showtime1 }}</a>
+                        <a href="#" class="btn btn-primary" rel="nofollow" >{{ film.showtime2 }}</a>
+                        <a href="#" class="btn btn-primary" rel="nofollow" >{{ film.showtime3 }}</a>
+                    </p>
+                
+                </div>
+                
+            </div>
+
+
+
+        </div> {% endcomment %}
+
+        
+    </main>
+        <!-- Footer-->
+        <footer class="py-5 bg-dark bgdark footerstyle" >
+            <div class="container" ><p class="m-0 text-center ">Copyright &copy;BookMyTiket 2022</p></div>
+            <div class="container"><p class="m-0 text-center ">Terms of Use</p></div>
+            <div class="container"><p class="m-0 text-center ">Privacy Policy</p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> {% endcomment %}
+        <!-- Core theme JS-->
+        
+        {% comment %} <script src="{% static 'js/scripts.js' %}"></script> {% endcomment %}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        {% comment %} <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> {% endcomment %}
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        {% block js %}
+        <script> 
+            //JS code here
+        </script>
+        {% endblock js %}
+    </body>
+</html>

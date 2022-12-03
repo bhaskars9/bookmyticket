@@ -1,0 +1,74 @@
+
+
+{% extends 'base.html' %}
+
+{% load static %}
+{% load utils %}
+
+<!-- Header -->
+{% block title %}
+        <title>{{ film.movie_name }} Preview</title>
+        <link rel="stylesheet" href="{% static 'css/seat_selection.css' %}">
+        
+        <style>
+          .results{
+            font-family: 'Lato', sans-serif;
+          }
+          .norounds{
+            border-radius:0px;
+          }
+        </style>
+        
+{% endblock title %}
+
+
+{% block content %}
+    <div class="container" id="movie-content">
+                
+        
+            {% comment %} Raw Queryset    {{ showtimes }} {% endcomment %}
+        
+        <div class="row">
+            
+            <div id="movie-poster" class="col-md-4 d-flex justify-content-center ">
+                <div class="card text-center border-0 bgdark" style="width: 18rem;">
+                    <img class="card-img-top img-thumbnail" src="{{ film.url }}" alt="Card image cap">
+                    <div class="card-body">
+                    {% comment %} <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> {% endcomment %}
+                    <a href="/show?date={{ "%Y-%m-%d"|cdate }}" class="btn btn-warning">Get Tickets</a>
+                    </div>
+                </div>
+                    
+            </div>
+            
+            <div id="movie-info" class="col-md-8 " data-movie-id="46306">
+
+                <div class="hidden-xs">
+                    <h1>{{ film.movie_name }}</h1>
+                    <h2>{{ film.movie_year }}</h2>
+                    <h3>{{ film.movie_lang }}</h3>
+                </div>
+                <p class="hidden-xs hidden-sm">
+                    {% if showtimes%}
+                    <em class="pull-left">Available at times&nbsp;</em>
+                    <br>
+                    {% for show in showtimes %}
+                    <a href="/show?date={{ "%Y-%m-%d"|cdate }}"  style="padding-left:20px;padding-right:20px;margin-right:10px;" class="btn btn-primary" rel="nofollow"  >{{ show.showtime }}</a>
+                    {% endfor %}
+                    {% else %}
+                    <em class="pull-left">No shows Available, Check later&nbsp;</em>
+                    {% endif %}
+                    <!-- 
+                    <a href="/show?date={{ "%Y-%m-%d"|cdate }}" class="btn btn-primary" rel="nofollow" >{{ film.showtime1 }}</a>
+                    <a href="/show?date={{ "%Y-%m-%d"|cdate }}" class="btn btn-primary" rel="nofollow" >{{ film.showtime2 }}</a>
+                    <a href="/show?date={{ "%Y-%m-%d"|cdate }}" class="btn btn-primary" rel="nofollow" >{{ film.showtime3 }}</a>
+                    -->
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+        
+
+

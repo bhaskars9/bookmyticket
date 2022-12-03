@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load utils %}
+
+<!-- Header -->
+{% block title %}
+<title> Checkout </title>
+{% endblock %}
+
+{% block content %}
+<div class="container text-success">
+<h1> Your show info is 
+    {% if show %} 
+            {{ show.showtime }} |
+            {{ show.movie }} 
+
+    {% endif %} </h1>
+<h1> Your film is {% if film %} {{ film.movie_name }} {% endif %} </h1>
+<h1> Your ticket are {% if seats %} {{ seats }} {% endif %} </h1>
+<h1> Your ticket are {% if sdate %} {{ sdate }} {% endif %} </h1>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'acc_base.html' %}
+
+{% load static %}
+{% load utils %}
+{% load crispy_forms_tags %}
+
+
+<!-- Header -->
+{% block title %}
+<title>User signup</title>
+{% endblock %}
+
+
+{% block content %}
+<div class="global-container bgdark">
+  <div class="card login-form">
+  <div class="card-body">
+    <h3 class="card-title text-center text-dark">User Registration</h3>
+    {% if account %}
+      Account
+    {% endif %}
+    <div class="card-text">
+      <!--
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
+      
+      <!-- Form starts -->
+      
+      <form method="post">
+        {% csrf_token %}
+            {{form|crispy}}
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            <div class="sign-up text-dark">
+              Already have an account? <a href="/accounts/usersignin">Login here</a>
+            </div>
+        </form>
+
+      <!-- Form ends -->
+      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% comment %} {% load static %}
+{% load crispy_forms_tags %} {% endcomment %}

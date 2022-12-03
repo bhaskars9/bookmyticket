@@ -1,0 +1,316 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load utils %}
+
+<!-- Header -->
+{% block title %}
+        <title>Book a show</title>
+        <link rel="stylesheet" href="{% static 'css/seat_selection2.css' %}">
+        
+        <style>
+          .results{
+            font-family: 'Lato', sans-serif;
+          }
+          .norounds{
+            border-radius:0px;
+          }
+          .modal-content{
+            {% comment %} background-color: #242333; {% endcomment %}
+            background-color:black;
+            color:white;
+          }
+          .sbodymodal{
+            background-color:black;
+          }
+        </style>
+        
+{% endblock title %}
+
+<!-- Content -->
+{% block content %}
+<div class="container">
+
+  
+    <div class="row">
+        <h1 class="text-warning"  >Select Showtime</h1>
+    </div>
+    <div class="row">
+        <form method="get" action="#" id="dateform">
+            <div class="form-group row">
+                <label for="selectdate" class="col-sm-2 col-form-label">Select Date</label>
+                <div class="col-sm-4">
+                <input type="date"  name="date" class="form-control" value="{% if date %}{{ date }}{% else %}{{"%Y-%m-%d"|cdate }}{% endif %}"   min="{{ "%Y-%m-%d"|cdate }}" max="{{ "%Y-%m-%d"|cdateadd:"30" }}" id="selectdate" value="">
+                {% comment %} <input data-provide="datepicker"> {% endcomment %}
+                <script>
+                  
+                </script>
+                </div>
+                
+            </div>
+            <hr>
+        </form>
+    </div>
+    <div class="row">
+        <!-- results -->
+        <div class="container col-md-8 results" >
+          <p>Movies showing on <b>{{ date }}</b> </p>
+            {% if films %}
+                {% for key, value in films.items %} 
+                    <div class="row" >
+                        <div class="col-md-2">
+                          <img class="img-fluid "  style="margin:10px" src="{{value|get:"url"}}">
+                        </div>
+                        <div class="col-md-10">
+                          <h1>{{ key }}</h1>
+                          <div class="form-group">
+                            {% for showid,time in value|get:"showtimes"|items %}
+                              <a class="btn btn-primary showtimebtn" style="padding-left:20px;padding-right:20px;" data-showid="{{ showid }}" data-toggle="modal" data-target="#exampleModalCenter22" href="#">{{ time }}</a>
+                            {% endfor %}
+                          </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+              {%endif%}
+        </div>
+        <!-- Seat -->
+
+        
+
+    </div>
+
+
+</div>
+
+              <!-- Seat Booking -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" >
+                  <div class="modal-header" style="border-bottom: None;">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Book tickets</h5>
+                    <button type="button" style="color:white;" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body" >
+                    <!-- Model body-->
+                    <div class="sbodymodal" >
+                      <div class="scontainer">
+                        <div class="screen"></div>
+                        <hr>
+                        <div class="srow">
+                          <div class="seatindex">A</div>
+                          <div class="seat" sno="A1" ></div>
+                          <div class="seat" sno="A2" ></div>
+                          <div class="seat" sno="A3" ></div>
+                          <div class="seat" sno="A4" ></div>
+                          <div class="seat" sno="A5" ></div>
+                          <div class="seat" sno="A6" ></div>
+                          <div class="seat" sno="A7" ></div>
+                          <div class="seat" sno="A8" ></div>
+                          
+                        </div>
+                        <div class="srow">
+                          <div class="seatindex">B</div>
+                          <div class="seat" sno="B1"></div>
+                          <div class="seat" sno="B2"></div>
+                          <div class="seat" sno="B3"></div>
+                          <div class="seat" sno="B4"></div>
+                          <div class="seat" sno="B5"></div>
+                          <div class="seat" sno="B6"></div>
+                          <div class="seat" sno="B7"></div>
+                          <div class="seat" sno="B8"></div>
+                        </div>
+                        <div class="srow">
+                          <div class="seatindex">C</div>
+                          <div class="seat" sno="C1"></div>
+                          <div class="seat" sno="C2"></div>
+                          <div class="seat" sno="C3"></div>
+                          <div class="seat" sno="C4"></div>
+                          <div class="seat" sno="C5"></div>
+                          <div class="seat" sno="C6"></div>
+                          <div class="seat" sno="C7"></div>
+                          <div class="seat" sno="C8"></div>
+                        </div>
+                        <div class="srow">
+                          <div class="seatindex">D</div>
+                          <div class="seat" sno="D1"></div>
+                          <div class="seat" sno="D2"></div>
+                          <div class="seat" sno="D3"></div>
+                          <div class="seat" sno="D4"></div>
+                          <div class="seat" sno="D5"></div>
+                          <div class="seat" sno="D6"></div>
+                          <div class="seat" sno="D7"></div>
+                          <div class="seat" sno="D8"></div>
+                        </div>
+                        <div class="srow">
+                          <div class="seatindex">E</div>
+                          <div class="seat" sno="E1"></div>
+                          <div class="seat" sno="E2"></div>
+                          <div class="seat" sno="E3"></div>
+                          <div class="seat" sno="E4"></div>
+                          <div class="seat" sno="E5"></div>
+                          <div class="seat" sno="E6"></div>
+                          <div class="seat" sno="E7"></div>
+                          <div class="seat" sno="E8"></div>
+                        </div>
+
+                        <div class="srow">
+                          <div class="seatindex">F</div>
+                          <div class="seat" sno="F1"></div>
+                          <div class="seat" sno="F2"></div>
+                          <div class="seat" sno="F3"></div>
+                          <div class="seat" sno="F4"></div>
+                          <div class="seat" sno="F5"></div>
+                          <div class="seat" sno="F6"></div>
+                          <div class="seat" sno="F7"></div>
+                          <div class="seat" sno="F8"></div>
+                        </div>
+                        <div class="srow">
+                          <div class="seatnumber"></div>
+                          <div class="seatnumber">1</div>
+                          <div class="seatnumber">2</div>
+                          <div class="seatnumber">3</div>
+                          <div class="seatnumber">4</div>
+                          <div class="seatnumber">5</div>
+                          <div class="seatnumber">6</div>
+                          <div class="seatnumber">7</div>
+                          <div class="seatnumber">8</div>
+                        </div>
+                      </div>
+                      <p>
+                        <span id="clearselected" style="cursor: pointer;">clear</span>
+                      </p>
+                      <p class="tex2t">
+                        You have selected <span id="count">0</span> seats for the price of $<span
+                          id="total"
+                          >0</span
+                        >!
+                      </p>
+                  
+                      
+                    </div>
+                  </div>
+                  <div class="modal-footer" style="border-top:None">
+
+                    <form  id="target_form" method="post" action="/checkout">
+                      {% csrf_token %}
+                            <input type="hidden" type="text" name="showdate" id="show_date" value="{% if date %}{{ date }}{% endif %}" />
+                            <input type="hidden" type="text" name="seats" id="seats_input" />
+                            <input type="hidden" type="text" name="showid" id="show_id" />
+                    </form>
+                      <button type="button" class="btn btn-primary btn-block bookticketsbtn">Book Tickets</button>
+                      <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+
+                        <!--
+                          <button type="button" class="btn btn-primary btn-block bookticketsbtn">Book Tickets</button>
+                          <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+                          -->                                  
+                  </div>
+                </div>
+              </div>
+            </div>
+        <!-- End of Modal-->
+{% endblock content %}
+
+<!-- JS -->
+{% block js%}
+<script>
+    $( document ).ready(function() {
+        // update movies based on 
+        
+        
+        $("#selectdate").change(function() {
+            console.log($(this).val());
+            console.log("date changed");
+            $("#dateform").submit();
+        });
+
+        $(".showtimebtn").click(function(){
+          // Show Seats event
+          seats();
+
+
+          var show_id;
+          show_id = $(this).attr("data-showid");
+          
+          show_date = $("#show_date").val();
+          $("#show_id").val(show_id);
+          // Clear booked seats info
+          $(".seat.occupied").each(function() {
+            $(this).removeClass("occupied")
+          });
+          // clear selected seat info
+          $(".seat.selected").each(function() {
+            $(this).removeClass("selected")
+          });
+          seats();
+
+          console.log(show_id);
+          // Also add to input with type hidden
+          $.ajax(
+          {
+              type:"GET", url: "bookedseats", data:{ show_id: show_id,show_date: show_date},
+              success: function(data) 
+              {
+                  console.log(data)  
+                  if(data.length !=0){
+                    //console.log("not empty");
+                    booked = data.split(",");
+                    console.log(booked);
+                    for (id in booked){
+                      $(".seat[sno|="+booked[id]).addClass("occupied");
+                    }
+
+                    
+                  }
+                  else {
+                    console.log("empty");
+                  }
+
+              }
+          })
+
+          $('#exampleModalCenter').modal('show');
+          
+        });
+        
+
+        $(".seat").click(function (){
+          if (!$(this).hasClass("occupied")){
+            //if ($(this).hasClass("selected")){
+            console.log($(this).attr("sno"));
+            $(this).toggleClass("selected"); //toggles selected class
+            seats();
+          }
+        });
+
+
+        function seats(){
+          // updates seats input field with selected seats
+          var selected=[];
+           $(".seat").each(function( index ) {
+            if ($(this).hasClass("selected")){
+              selected.push($(this).attr("sno"));
+            }
+          });
+          console.log(selected);
+          $("#seats_input").val(selected);
+          return selected;
+        }
+
+
+        $(".bookticketsbtn").click(function(){
+          $( "#target_form" ).submit();
+          console.log("Button clicked");
+        });
+        
+        
+
+        $("#clearselected").click(function(){
+          //clear all selected seats
+        });
+    });
+</script>
+<script src="{% static 'js/seat_selection2.js' %}"></script>
+{% endblock js%}
