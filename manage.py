@@ -13,7 +13,7 @@ def main():
         load_dotenv('./.env')
 
     # When running on Azure App Service you should use the production settings. as it will inject environment varianles
-    settings_module = "azureproject.production" if 'WEBSITE_HOSTNAME' in os.environ else 'movieticket.settings'
+    settings_module = "movieticket.production" if 'WEBSITE_HOSTNAME' in os.environ else 'movieticket.settings'
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
 
     # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'movieticket.settings')
