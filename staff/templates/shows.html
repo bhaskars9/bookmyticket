@@ -1,0 +1,98 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% load utils %}
+
+{% block title %}
+<title> Movies - Admin </title>
+{% endblock %}
+
+
+
+{% block content %}
+
+<h1 class="mt-4">Shows</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/admin/index">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="index.html">Shows</a></li>
+    <li class="breadcrumb-item active">Add Show</li>
+    <li class="breadcrumb-item"><a href="index.html">Edit</a></li>
+</ol>
+
+<div class="card mb-4">
+  <div class="card-header">
+      <i class="fas fa-table me-1"></i>
+      List of Shows 
+      
+
+      <a class="btn btn-outline-primary"  href="/admin/addfilm" align="right">Add Show</a>
+  </div>
+  <div class="card-body">
+      <table id="datatablesSimple">
+          <thead>
+              <tr>
+                  <th>Movie</th>
+                  <th>Showtime</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Price</th>
+                  <th>thumbnail</th>
+                  <th>Actions</th>
+              </tr>
+          </thead>
+          <tfoot>
+              <tr>
+                  <th>Movie</th>
+                  <th>Showtime</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Price</th>
+                  <th>thumbnail</th>
+                  <th>Actions</th>
+              </tr>
+          </tfoot>
+          <tbody>
+
+            {% for show in shows %}
+                <tr>
+                  <td class="filmname">{{ film.movie_name }}</td>
+                  <td >{{ show.movie }}</td>
+                  <td >{{ show.showtime }}</td>
+                  <td >{{ show.start_date }}</td>
+                  <td >{{ show.end_date }}</td>
+                  <td>{{ show.price }}</td>
+                  <td ><img src="{{ film.url }}"  style="height:75px;width:90px;"></td>
+                  <td>
+                      <a class="btn btn-warning" href="/admin/deleteshow/{{ show.id }}">Edit</a>
+                      {% comment %} <a href="#">delete</a> {% endcomment %}
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-danger delete-show" data-id="{{ show.id }}" data-toggle="modal" data-target="#deleteModel">
+                        Delete
+                      </button>
+                  </td>
+                </tr>
+            {% endfor %}
+            
+              <!-- Preserving Sample UI data
+              <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+                  <td>Edinburgh</td>
+                  <td>61</td>
+                  <td>2011/04/25</td>
+                  <td>2011/04/25</td>
+                  <td>$320,800</td>
+              </tr>
+                -->
+
+          </tbody>
+      </table>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% comment %} 
+{% block footer %}
+
+{% endblock %} {% endcomment %}

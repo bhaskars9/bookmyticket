@@ -12,21 +12,35 @@
         {% endblock %}
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="{% static 'admin/css/styles.css' %}" rel="stylesheet" />
+
+        <!-- (added later) Delete this if there's issues with other script files  -->
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+        
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.html">Book my Ticket</a>
-            <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-            <!-- Navbar Search-->
+            
+            
+            <!-- Navbar Search [no need]-->
+            <!--
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
                     <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
+        -->
+
+            <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            </div>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
@@ -42,29 +56,35 @@
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
+
+                <!-- Constant nav bar -->
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="/admin/index">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
+                            {% comment %} <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Bookings
+                            </a> {% endcomment %}
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Layouts
+                                Movies
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                                    <a class="nav-link" href="/admin/movies">Movies</a>
+                                    <a class="nav-link" href="/admin/shows">Shows</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Pages
+                                Users
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
@@ -105,18 +125,32 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                        <div class="small">Logged in as: 
+                            {% if user.is_authenticated %}
+                            {{ user.username }}
+                            {% else %}
+                            Geust
+                            {% endif %}
+                        </div>
+                        BookMyTicket
                     </div>
                 </nav>
+
             </div>
+
+            <!-- Dynamic Main Content starts from here -->
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
+                        {% block content %}
+
+
                         <h1 class="mt-4">Dashboard</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
+
+                        <!-- Cards -->
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
@@ -155,6 +189,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Are and Bar Charts -->
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="card mb-4">
@@ -175,6 +211,8 @@
                                 </div>
                             </div>
                         </div>
+
+
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
@@ -223,12 +261,15 @@
                                 </table>
                             </div>
                         </div>
+
+                        {% endblock %}
+
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2022</div>
+                            <div class="text-muted">Copyright &copy;BookMyTicket 2022</div>
                             <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
@@ -241,10 +282,22 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="{% static 'admin/js/scripts.js' %}"></script>
+
+        {% comment %} 
+        <!-- Keep them where there are  charts -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="{% static 'admin/assets/demo/chart-area-demo.js' %}"></script>
-        <script src="{% static 'admin/assets/demo/chart-bar-demo.js' %}"></script>
+        <script src="{% static 'admin/assets/demo/chart-bar-demo.js' %}"></script> 
+        {% endcomment %}
+
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="{% static 'admin/js/datatables-simple-demo.js' %}"></script>
+        
+        <!-- (added later) Delete this if there's issues with other script files  -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        {% block footer %}
+        
+        {% endblock %}
     </body>
 </html>

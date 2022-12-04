@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import (login_required,
                                             user_passes_test)
 from django.shortcuts import HttpResponseRedirect, redirect, render
 from django.template.context_processors import csrf
-
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 from .forms import filmForm, showForm
 from .models import film, show
 
@@ -31,7 +32,6 @@ def base(request):
 
 ################################################ LOGING VIEWS
 
-# @login_required(login_url='/accounts/adminlogin')
 # @user_passes_test(staff_required, login_url='/accounts/adminlogin')
 def index(request):
     context = {}
@@ -41,9 +41,25 @@ def index(request):
 #     context = {}
 #     return render(request,"admin_login.html",context)
 
+class FilmCreate(CreateView):
+    template_name = "film/add_film.html";
+    model = film;
+    fields = ['movie_name', 'movie_lang', 'movie_year','url'];
+    success_url = reverse_lazy('movies');
+
+class FilmUpdate(UpdateView):
+    template_name = "film/edit_film.html";
+    model = film;
+    fields = ['movie_name', 'movie_lang', 'movie_year','url'];
+    success_url = reverse_lazy('movies');
+
+class FilmDelete(DeleteView):
+    template_name = "film/delete_film.html";
+    model = film;
+    success_url = reverse_lazy('movies');
 
 ######################################## MOVIE VIEWS
-@user_passes_test(staff_required, login_url='/accounts/adminlogin')
+# @user_passes_test(staff_required, login_url='/accounts/adminlogin')
 def movies(request):
     context = {}
     
@@ -51,13 +67,13 @@ def movies(request):
     # if form.is_valid():
     #     form.save()
     # context['form']= form
-    movies = film.objects.filter().values_list('id','movie_name','date_added', named=True)
+    movies = film.objects.filter().values_list('id','movie_name','date_added','movie_lang','url','movie_year', named=True)
     context = {
     'film_list': movies
     }
     return render(request,"movies.html",context)
 
-@user_passes_test(staff_required, login_url='/accounts/adminlogin')
+# @user_passes_test(staff_required, login_url='/accounts/adminlogin')
 def add_film(request):
     if request.method == "POST":
         film_form = filmForm(request.POST, request.FILES)
@@ -73,7 +89,7 @@ def add_film(request):
     
 ############################################## SHOW VIEWS
 
-@user_passes_test(staff_required, login_url='/accounts/adminlogin')
+# @user_passes_test(staff_required, login_url='/accounts/adminlogin')
 def shows(request):
     context = {}
     # movies = film.objects.filter(deleted=False).values_list('id','movie_name','date_added', named=True)
@@ -83,7 +99,7 @@ def shows(request):
     shows = show.objects.all()
     return render(request,"shows.html",context={'shows':shows})
 
-@user_passes_test(staff_required, login_url='/accounts/adminlogin')
+# @user_passes_test(staff_required, login_url='/accounts/adminlogin')
 def add_show(request):
     if request.method == "POST":
         show_form = showForm(request.POST, request.FILES)
@@ -97,12 +113,12 @@ def add_show(request):
     shows = show.objects.all()
     return render(request=request, template_name="add_show.html", context={'show_form':show_form, 'shows':shows})
 
-@user_passes_test(staff_required, login_url='/accounts/adminlogin')
+# @user_passes_test(staff_required, login_url='/accounts/adminlogin')
 def bookings(request):
     context = {}
     return render(request,"bookings.html",context)
 
-@user_passes_test(staff_required, login_url='/accounts/adminlogin')
+# @user_passes_test(staff_required, login_url='/accounts/adminlogin')
 def users(request):
     context = {}
     users=Account.objects.filter(is_staff=False).all();

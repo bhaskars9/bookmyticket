@@ -26,7 +26,6 @@ def user_signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            user.groups.add(Group.objects.get(name='customer'))
             msg = 'user created'
             return redirect('/accounts/userlogin')
         else:
@@ -36,8 +35,10 @@ def user_signup(request):
     return render(request,'user_register.html', {'form': form, 'msg': msg})
 
 def admin_signup(request):
-    if request.user.is_authenticated and user.is_staff:
+    if request.user.is_authenticated and request.user.is_staff:
         return redirect('/admin')
+    elif request.user.is_authenticated: # redirect user to home page ;)
+        return redirect('/')
     
     msg = None
     # account_type = "Admin"

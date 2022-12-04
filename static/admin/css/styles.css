@@ -4807,7 +4807,8 @@ textarea.form-control-lg {
   content: var(--bs-breadcrumb-divider, "/") /* rtl: var(--bs-breadcrumb-divider, "/") */;
 }
 .breadcrumb-item.active {
-  color: #6c757d;
+  color: #000;
+  font-weight: bold;
 }
 
 .pagination, .dataTable-pagination ul {

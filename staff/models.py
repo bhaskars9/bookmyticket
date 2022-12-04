@@ -8,7 +8,7 @@ class film(models.Model):
     movie_year = models.IntegerField(blank=True, null=True)
     url = models.URLField(blank=True, null=True)
 #     active = models.BooleanField(default=True)
-#     date_added = models.DateField(auto_now=False, auto_now_add=True, blank=True, null=True)
+    date_added = models.DateField(auto_now=False, auto_now_add=True, blank=True, null=True)
     def __str__(self):
         return self.movie_name
 
