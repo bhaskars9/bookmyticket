@@ -22,4 +22,4 @@ class show(models.Model):
 
 
     def __str__(self):
-        return self.showtime
+        return self.movie.movie_name+"@"+self.showtime.strftime("%I:%M %p")

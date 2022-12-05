@@ -14,9 +14,9 @@
 {% block content %}
 
 <div class="global-container bgdark">
-  <div class="card login-form">
+  <div class="card login-form bgdark" style="border-style: solid;border-color: yellow;">
   <div class="card-body">
-    <h3 class="card-title text-center text-dark">Admin Login</h3>
+    <h3 class="card-title text-center text-light">Admin Login</h3>
     <div class="card-text">
       <!--
       <div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
@@ -26,10 +26,10 @@
       <form method="post">
         {% csrf_token %}
             {{form|crispy}}
-            <button type="submit" class="btn btn-primary btn-block">Submit</button>
-            <div class="sign-up text-dark">
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            {% comment %} <div class="sign-up text-dark">
               Don't have an account? <a href="/accounts/adminsignup">Create One</a>
-            </div>
+            </div> {% endcomment %}
         </form>
 
       <!-- Form ends -->

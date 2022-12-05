@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.forms import formset_factory,modelformset_factory
 from staff.models import *
-from datetime import date,time
+from datetime import datetime, date,time,timezone
 from accounts.views import is_user, user_login_required
 from django.contrib.auth.decorators import (user_passes_test)
 from .models import *
@@ -63,17 +63,16 @@ def show_select(request):
         # films = film.objects.filter(end_date__gte=date).values_list('id','movie_name','url','showtime1','showtime2','showtime3', named=True)
         res_dict = {}
         
+        # Grouping shows rows by movie and appending showitmes in a list
         for s in shows:
-            # fields needed showid 0, price 1, showtime 2, movieid 3, movieurl 4, moviename 5,
-            print(type(s),s[0])
-            if(s[5] not in res_dict.keys()): #movie doesn't exit in dict
+            # legend of fields: showid 0, price 1, showtime 2, movieid 3, movieurl 4, moviename 5,
+            if(s[5] not in res_dict.keys()): 
+                #movie doesn't exit in dict
                 res_dict[s[5]]={'url':s[4],'price':s[1], 'showtimes':{s[0]:s[2]}, 'movieid':s[3]}
-            else: #movie already exists
-                res_dict[s[5]]['showtimes'][s[0]]=s[2]
-            
-            
+            else: 
+                #movie already exists
+                res_dict[s[5]]['showtimes'][s[0]]=s[2]            
             #print(s['movie_name'], s['movie_url'], s['price'], s['id'])
-            pass
         
         context = {'films':res_dict,'date':date,'shows':shows}
     
@@ -84,7 +83,7 @@ def bookedseats(request):
            show_id = request.GET['show_id']
            show_date = request.GET['show_date']
         #    bookedseats = {}
-           seats = booking.objects.filter(show=show_id,booked_date=show_date).values('seat_num')
+           seats = booking.objects.filter(show=show_id,show_date=show_date).values('seat_num')
            booked = ""
            for s in seats:
             booked+=s['seat_num']+","
@@ -103,14 +102,19 @@ def checkout(request):
         seats = request.POST['seats']
         show_id = request.POST['showid']
 
-        # user = Account.objects.get(id=request.user.id)
+        # Get Show id
         showinfo = show.objects.get(id=show_id)
 
-        booking.objects.create(booking_code="Random",user=request.user,show=showinfo,booked_date=show_date, seat_num=seats)        
+        num_seats = len(seats.split(","))
+        # user = Account.objects.get(id=request.user.id)
+        showinfo = show.objects.get(id=show_id)
+        total = showinfo.price*num_seats
+
+        booking.objects.create(booking_code="Random",user=request.user,show=showinfo,show_date=show_date,booked_date=datetime.now(timezone.utc),  seat_num=seats, num_seats=num_seats,total = total)        
 
         context["film"] = film.objects.get(movie_name = showinfo.movie) 
-        context['sdate']=show_date
-        context['seats']=seats
+        context['sdate'] = show_date
+        context['seats'] = seats
         context['show'] = showinfo
 
     return render(request,"checkout.html",context)

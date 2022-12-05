@@ -3,7 +3,7 @@
 {% load utils %}
 
 {% block title %}
-<title> Movies - Admin </title>
+<title> Shows - Admin </title>
 {% endblock %}
 
 
@@ -12,10 +12,9 @@
 
 <h1 class="mt-4">Shows</h1>
 <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="/admin/index">Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="index.html">Shows</a></li>
-    <li class="breadcrumb-item active">Add Show</li>
-    <li class="breadcrumb-item"><a href="index.html">Edit</a></li>
+    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+    <li class="breadcrumb-item active">Shows</li>
+    <li class="breadcrumb-item"><a href="/admin/createshow">Add Show</a></li>
 </ol>
 
 <div class="card mb-4">
@@ -24,7 +23,7 @@
       List of Shows 
       
 
-      <a class="btn btn-outline-primary"  href="/admin/addfilm" align="right">Add Show</a>
+      <a class="btn btn-outline-primary"  href="/admin/createshow" align="right">Add Show</a>
   </div>
   <div class="card-body">
       <table id="datatablesSimple">
@@ -54,20 +53,17 @@
 
             {% for show in shows %}
                 <tr>
-                  <td class="filmname">{{ film.movie_name }}</td>
                   <td >{{ show.movie }}</td>
                   <td >{{ show.showtime }}</td>
                   <td >{{ show.start_date }}</td>
                   <td >{{ show.end_date }}</td>
                   <td>{{ show.price }}</td>
-                  <td ><img src="{{ film.url }}"  style="height:75px;width:90px;"></td>
+                  <td ><img src="{{ show.movie.url }}"  style="height:50px;width:40px;"></td>
                   <td>
-                      <a class="btn btn-warning" href="/admin/deleteshow/{{ show.id }}">Edit</a>
+                      <a class="btn btn-warning" href="/admin/updateshow/{{ show.id }}">Edit</a>
                       {% comment %} <a href="#">delete</a> {% endcomment %}
                       <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-danger delete-show" data-id="{{ show.id }}" data-toggle="modal" data-target="#deleteModel">
-                        Delete
-                      </button>
+                      <a class="btn btn-danger" href="/admin/deleteshow/{{ show.id }}" >Delete</a>
                   </td>
                 </tr>
             {% endfor %}

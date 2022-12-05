@@ -22,6 +22,11 @@
           .sbodymodal{
             background-color:black;
           }
+          .datebox{
+            background-color:#000814;
+            color:white;
+            border-color:grey;
+          }
         </style>
         
 {% endblock title %}
@@ -32,14 +37,14 @@
 
   
     <div class="row">
-        <h1 class="text-warning"  >Select Showtime</h1>
+        <h2 class="text-primary"  >Select Showtime</h2>
     </div>
     <div class="row">
         <form method="get" action="#" id="dateform">
             <div class="form-group row">
-                <label for="selectdate" class="col-sm-2 col-form-label">Select Date</label>
+                <label for="selectdate" class="text-secondary col-sm-2 col-form-label">Select Date</label>
                 <div class="col-sm-4">
-                <input type="date"  name="date" class="form-control" value="{% if date %}{{ date }}{% else %}{{"%Y-%m-%d"|cdate }}{% endif %}"   min="{{ "%Y-%m-%d"|cdate }}" max="{{ "%Y-%m-%d"|cdateadd:"30" }}" id="selectdate" value="">
+                <input type="date"  name="date" class="form-control datebox"  value="{% if date %}{{ date }}{% else %}{{"%Y-%m-%d"|cdate }}{% endif %}"   min="{{ "%Y-%m-%d"|cdate }}" max="{{ "%Y-%m-%d"|cdateadd:"30" }}" id="selectdate" value="">
                 {% comment %} <input data-provide="datepicker"> {% endcomment %}
                 <script>
                   
@@ -53,12 +58,12 @@
     <div class="row">
         <!-- results -->
         <div class="container col-md-8 results" >
-          <p>Movies showing on <b>{{ date }}</b> </p>
+          <p class="text-secondary">Movies showing on <b>{{ date }}</b> </p>
             {% if films %}
                 {% for key, value in films.items %} 
                     <div class="row" >
                         <div class="col-md-2">
-                          <img class="img-fluid "  style="margin:10px" src="{{value|get:"url"}}">
+                          <img class="img-fluid "  style="margin:10px;" src="{{value|get:"url"}}">
                         </div>
                         <div class="col-md-10">
                           <h1>{{ key }}</h1>
@@ -178,7 +183,7 @@
                           <div class="seatnumber">8</div>
                         </div>
                       </div>
-                      <p>
+                      {% comment %} <p>
                         <span id="clearselected" style="cursor: pointer;">clear</span>
                       </p>
                       <p class="tex2t">
@@ -186,7 +191,7 @@
                           id="total"
                           >0</span
                         >!
-                      </p>
+                      </p> {% endcomment %}
                   
                       
                     </div>

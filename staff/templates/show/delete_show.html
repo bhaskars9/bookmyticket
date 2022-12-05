@@ -4,35 +4,38 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-<title> Delete Film - Admin </title>
+<title> Delete Show - Admin </title>
 {% endblock %}
 
 
 
 {% block content %}
 
-<h1 class="mt-4">Movies</h1>
+<h1 class="mt-4">Show</h1>
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="/admin/movies">Movies</a></li>
-    <li class="breadcrumb-item active">Delete Film</li>
+    <li class="breadcrumb-item"><a href="/admin/shows">Shows</a></li>
+    <li class="breadcrumb-item active">Delete Show</li>
 </ol>
 
 <div class="card mb-4">
   <div class="card-header">
-      <h2 class="my-2">Delete Film</h2>
+      <h2 class="my-2">Delete Show</h2>
   </div>
   <div class="card-body">
         <!--Django Model Form-->
       <div class="container">
           <div class="row justify-content-md-center">
               <div class="col-md-auto">
-                  <img class="card-img-top" src="{{ object.url }} " style="width: 18rem;">
+                  <img class="card-img-top" src="{{ object.movie.url }} " style="width: 18rem;">
               </div>
               <div class="col">
-                  <h3> Film Name : {{ object }}</h3>
-                  <h5> Year: {{ object.movie_year }} </h5>
-                  <p> Language: {{ object.movie_lang }} </p>
+                  <p> Film Name : {{ object.movie }}</p>
+                  <p> Year: {{ object.movie.movie_year }} </p>
+                  <p> Start Date: {{ object.start_date }} </p>
+                  <p> End Date: {{ object.end_date }} </p>
+                  <p> Price: {{ object.price }} </p>
+                  <p> Showtime: {{ object.showtime }} </p>
               </div>
           </div>
           <div class="row">

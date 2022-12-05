@@ -1,8 +1,8 @@
 from django import template
+from datetime import datetime, date, timezone,timedelta
 
 register = template.Library()
 
-import datetime
 
 @register.filter(name="lower")
 def lower(value): # Only one argument.
@@ -31,11 +31,26 @@ def tformat(time, desired_format):
     """customizing time format"""
     return time.strftime(desired_format)
 
+@register.filter(name="tdiff")
+def tformat(dtime):
+    """customizing time format"""
+    diff =  datetime.now(timezone.utc) - dtime
+    secs = round(diff.total_seconds())
+    if (secs < 60):
+        return str(secs)+" seconds ago"
+    elif (secs < 3600):
+        return str(int(secs/60))+" minutes ago"
+    elif (secs < 86400):
+        return str(int(secs/3600))+" hours ago"
+    else:
+        return str(diff.days)+" days ago"
+
+
 @register.filter(name="strdateformat")
 def strdateformat(str_date,args):
     """customizing string datetime format"""
     formats = [arg.strip() for arg in args.split('/')]
-    return datetime.datetime.strptime(str_date,formats[0]).strftime(formats[1])
+    return datetime.strptime(str_date,formats[0]).strftime(formats[1])
 
 @register.filter(name="type")
 def return_type(var):
@@ -43,14 +58,16 @@ def return_type(var):
 
 @register.filter(name="cdate")
 def current_date(date_format):
-    return datetime.date.today().strftime(date_format)
+    return date.today().strftime(date_format)
 
 
 @register.filter(name="cdateadd")
 def current_date(date_format,days):
-    return (datetime.date.today() + datetime.timedelta(days=int(days))).strftime(date_format)
+    return (date.today() + timedelta(days=int(days))).strftime(date_format)
 
-# Show Selection data formatting functions
+
+############ Get value from data structures
+
 @register.filter(name="get")
 def get_value(dictionary, key):
     return dictionary.get(key)
@@ -58,3 +75,7 @@ def get_value(dictionary, key):
 @register.filter(name="items")
 def get_value(dictionary):
     return dictionary.items()
+
+@register.filter(name="tup")
+def get_tuple(tuple,index):
+    return tuple[int(index)]
