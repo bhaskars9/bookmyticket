@@ -4,11 +4,21 @@ from django.db import models
 
 class film(models.Model):
     movie_name = models.CharField(max_length = 100)
+    movie_genre = models.CharField(max_length = 100,null=True,blank=True)
+    movie_genre = models.CharField(max_length=100,null=True,blank=True)
     movie_lang = models.CharField(blank=True, null=True,max_length = 100)
     movie_year = models.IntegerField(blank=True, null=True)
+    movie_plot = models.TextField(blank=True, null=True)
     url = models.URLField(blank=True, null=True)
 #     active = models.BooleanField(default=True)
     date_added = models.DateField(auto_now=False, auto_now_add=True, blank=True, null=True)
+    def __str__(self):
+        return self.movie_name
+
+class banner(models.Model):
+    movie = models.ForeignKey(film,on_delete=models.CASCADE,blank=True,null=True)
+    url = models.URLField(blank=True, null=True)
+    modified = models.DateTimeField(auto_now=True, blank=True, null=True)
     def __str__(self):
         return self.movie_name
 

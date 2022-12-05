@@ -3,68 +3,56 @@
 {% load utils %}
 
 {% block title %}
-<title> Movies - Admin </title>
+<title> Banners - Admin </title>
 {% endblock %}
 
 
 
 {% block content %}
 
-<h1 class="mt-4">Movies</h1>
+<h1 class="mt-4">Banners</h1>
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-    <li class="breadcrumb-item active">Movies</li>
-    <li class="breadcrumb-item"><a href="/admin/createfilm">Add Movie</a></li>
+    <li class="breadcrumb-item active">Banners</li>
+    <li class="breadcrumb-item"><a href="/admin/addbanner">Add Banner</a></li>
 </ol>
 
 <div class="card mb-4">
   <div class="card-header">
       <i class="fas fa-table me-1"></i>
-      List of Movies 
-      
-
-      <a class="btn btn-outline-primary"  href="/admin/createfilm" align="right">Add Movie</a>
+      List of Banners
   </div>
   <div class="card-body">
       <table id="datatablesSimple">
           <thead>
               <tr>
                   <th>Movie</th>
-                  <th>Genre</th>
-                  <th>Language</th>
-                  <th>Year</th>
-                  <th>thumbnail</th>
-                  <th>Added on</th>
+                  <th>Banner</th>
+                  <th>Modified</th>
                   <th>Actions</th>
               </tr>
           </thead>
           <tfoot>
               <tr>
                   <th>Movie</th>
-                  <th>Genre</th>
-                  <th>Language</th>
-                  <th>Year</th>
-                  <th>thumbnail</th>
-                  <th>Added on</th>
+                  <th>Banner</th>
+                  <th>Modified</th>
                   <th>Actions</th>
               </tr>
           </tfoot>
           <tbody>
 
-            {% for film in film_list %}
+            {% for banner in banners %}
                 <tr>
-                  <td >{{ film.movie_name }}</td>
-                  <td >{{ film.movie_genre}}</td>
-                  <td >{{ film.movie_lang }}</td>
-                  <td >{{ film.movie_year }}</td>
-                  <td style="padding:5px" ><img src="{{ film.url }}"  style="height:50px;width:40px;"></td>
-                  <td>{{ film.date_added }}</td>
+                  <td>{{ banner.movie__movie_name }}</td>
+                  <td style="padding:5px" ><img src="{{ banner.url }}"  style="height:50px;width:150px;"></td>
+                  <td>{{ banner.modified|tdiff }}</td>
                   <td>
-                      <a class="btn btn-primary" href="/detail/{{ film.id }}" target="_blank" >Preview</a>
-                      <a class="btn btn-warning" href="/admin/updatefilm/{{ film.id }}">Edit</a>
+                      <a class="btn btn-primary" href="/" target="_blank" >Preview</a>
+                      <a class="btn btn-warning" href="/admin/editbanner/{{ banner.id }}">Edit</a>
                       {% comment %} <a href="#">delete</a> {% endcomment %}
                       <!-- Button trigger modal -->
-                      <a class="btn btn-danger" data-id="{{ film.id }}" href="/admin/deletefilm/{{ film.id }}">Delete</a>
+                      <a class="btn btn-danger" data-id="{{ banner.id }}" href="/admin/deletebanner/{{ banner.id }}">Delete</a>
                   </td>
                 </tr>
             {% endfor %}

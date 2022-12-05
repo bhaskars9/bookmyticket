@@ -18,9 +18,7 @@
         
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
         <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-        {% block title %}
-        <title> Sample Title</title>
-        {% endblock title %}
+        
         <style>
             body{
                 display: flex;
@@ -61,6 +59,9 @@
                 border-radius: 0px;
              }
         </style>
+        {% block title %}
+        <title> Sample Title</title>
+        {% endblock title %}
     </head>
     <body class="bgdark" >
         <!-- Navigation-->
@@ -72,7 +73,7 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         {% comment %} <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li> {% endcomment %}
                         <li class="nav-item"><a class="nav-link text-warning" href="/show?date={{ "%Y-%m-%d"|cdate }}">Book Show</a></li>
-                        <li class="nav-item"><a class="nav-link text-warning" href="#!">My bookings</a></li>
+                        <li class="nav-item"><a class="nav-link text-warning" href="/mybookings">My bookings</a></li>
                         {% comment %} <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

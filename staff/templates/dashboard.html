@@ -66,10 +66,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        
-                        <p> Dates {{ table }} </p>
                         
                         <div class="card mb-4">
                           <div class="card-header">
@@ -81,11 +77,12 @@
                                   <thead>
                                       <tr>
                                           <th>Show Date</th>
-                                          <th>Booked time</th>
-                                          <th>Show info </th>
+                                          <th>Movie</th>
+                                          <th>Show Time </th>
                                           <th>Tickets</th>
                                           <th>User</th>
                                           <th>total</th>
+                                          <th>Booked time</th>
                                       </tr>
                                   </thead>
                                   <tfoot>
@@ -100,12 +97,13 @@
                                   <tbody>
                                     {% for booking in tabledata %}
                                       <tr>
-                                          <td>{{ booking.show_date|dformat:"%b %d" }}</td>
-                                          <td>{{ booking.booked_date|tdiff }}</td>
-                                          <td>{{ booking.show }}</td>
+                                          <td>{{ booking.show_date|dformat:"%b %d %Y" }}</td>
+                                          <td>{{ booking.show__movie__movie_name }}</td>
+                                          <td>{{ booking.show__showtime }}</td>
                                           <td>{{ booking.num_seats }}</td>
                                           <td>{{ booking.user__username }}</td>
                                           <td>${{ booking.total }}</td>
+                                          <td>{{ booking.booked_date|tdiff }}</td>
                                       </tr>
                                     {% endfor %}
                                   </tbody>

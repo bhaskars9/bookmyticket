@@ -44,7 +44,12 @@ def tformat(dtime):
         return str(int(secs/3600))+" hours ago"
     else:
         return str(diff.days)+" days ago"
-
+@register.filter(name="active1")
+def setfirstasactive(num):
+    if (num==0):
+        return "active"
+    else:
+        return ""
 
 @register.filter(name="strdateformat")
 def strdateformat(str_date,args):

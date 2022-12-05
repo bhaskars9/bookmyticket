@@ -8,7 +8,6 @@
 <!-- Header -->
 {% block title %}
         <title>{{ film.movie_name }} Preview</title>
-        <link rel="stylesheet" href="{% static 'css/seat_selection.css' %}">
         
         <style>
           .results{
@@ -16,6 +15,9 @@
           }
           .norounds{
             border-radius:0px;
+          }
+          .imagestyle{
+            box-shadow: 0 4px 8px 0 rgba(185,65,223, 88%), 0 6px 20px 0 rgba(4,47,243,99%);
           }
         </style>
         
@@ -30,7 +32,7 @@
             
             <div id="movie-poster" class="col-md-4 d-flex justify-content-center ">
                 <div class="card text-center border-0 bgdark" style="width: 18rem;">
-                    <img class="card-img-top img-thumbnail" src="{{ film.url }}" alt="Card image cap">
+                    <img class="card-img-top imagestyle " src="{{ film.url }}" alt="Card image cap">
                     <div class="card-body">
                     {% comment %} <h5 class="card-title">Special title treatment</h5>
                     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> {% endcomment %}
@@ -45,7 +47,7 @@
                 <div class="hidden-xs">
                     <h1>{{ film.movie_name }}</h1>
                     <h2>{{ film.movie_year }}</h2>
-                    <h3>{{ film.movie_lang }}</h3>
+                    <h3>{{ film.movie_lang }} | {{ film.movie_genre }}</h3>
                 </div>
                 <p class="hidden-xs hidden-sm">
                     {% if showtimes%}
@@ -57,12 +59,8 @@
                     {% else %}
                     <em class="pull-left">No shows Available, Check later&nbsp;</em>
                     {% endif %}
-                    <!-- 
-                    <a href="/show?date={{ "%Y-%m-%d"|cdate }}" class="btn btn-primary" rel="nofollow" >{{ film.showtime1 }}</a>
-                    <a href="/show?date={{ "%Y-%m-%d"|cdate }}" class="btn btn-primary" rel="nofollow" >{{ film.showtime2 }}</a>
-                    <a href="/show?date={{ "%Y-%m-%d"|cdate }}" class="btn btn-primary" rel="nofollow" >{{ film.showtime3 }}</a>
-                    -->
                 </p>
+                <p>{{ film.movie_plot }}</p>
             </div>
         </div>
     </div>

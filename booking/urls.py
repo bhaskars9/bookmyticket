@@ -7,6 +7,7 @@ urlpatterns = [
     path('detail/<id>', views.movie_detail), 
     path('show', views.show_select),
     path('bookedseats', views.bookedseats),
+    path('mybookings', views.userbookings),
     path('checkout', views.checkout), 
     path('booked', views.booked_ok), 
 ]

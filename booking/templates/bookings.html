@@ -1,0 +1,69 @@
+
+
+{% extends 'base.html' %}
+
+{% load static %}
+{% load utils %}
+
+<!-- Header -->
+{% block title %}
+        <title>My Bookings </title>
+        <style>
+          .results{
+            font-family: 'Lato', sans-serif;
+          }
+          .norounds{
+            border-radius:0px;
+          }
+          table {
+            text-align: center;
+        }
+        </style>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+{% endblock title %}
+
+
+{% block content %}
+
+
+{% comment %} <p> Raw Dataset: {{ data }} </p> {% endcomment %}
+    <div class="container" id="movie-content">        
+            {% comment %} Raw Queryset    {{ showtimes }} {% endcomment %}
+            <div class="row">
+                <h2 class="text-primary"  >My Bookings</h2>
+            </div>
+            {% if data %}
+            <table class="table table-dark table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Showdate</th>
+                    <th scope="col">Movie</th>
+                    <th scope="col">Showtime</th>
+                    <th scope="col">Seats</th>
+                    <th scope="col">Total ($$)</th>
+                    <th scope="col">Booked</th>
+                  </tr>
+                </thead>
+                <tbody>
+                 
+                    {% for row in data %}
+                  <tr>
+                    <td>{{ row.show_date }}</td>
+                    <td>{{ row.show__movie__movie_name }}</td>
+                    <td>{{ row.show__showtime }}</td>
+                    <td>{{ row.seat_num }}</td>
+                    <td>${{ row.total }}</td>
+                    <td>{{ row.booked_date|tdiff }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              {% else %}
+                  <p class="text-secondary">No booking have been made yet</p>
+                  {% endif%}
+
+    </div>
+
+
+{% endblock content %}
+        

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.forms import formset_factory,modelformset_factory
 from staff.models import *
 from datetime import datetime, date,time,timezone
+from django.views.generic.list import ListView
 from accounts.views import is_user, user_login_required
 from django.contrib.auth.decorators import (user_passes_test)
 from .models import *
@@ -16,30 +17,13 @@ def index(request):
     return HttpResponse(message)
 
 def home(request):
-    context = {}
     movies = film.objects.filter().values_list('id','movie_name','url', named=True)
+    banners = banner.objects.filter().select_related().values_list('movie__movie_name','url', named=True)
     context = {
-    'films': movies
+    'films': movies,
+    'banners':banners
     }
     return render(request,"index.html", context)
-
-# def login(request):
-#     if (request.method == "POST"):
-#         email = request.POST.get('email')
-#         passw = request.POST.get('pass')
-
-#     return render(request,"user_login.html")
-
-# def signup(request):
-
-#     if (request.method == "POST"):
-#         fname = request.POST.get('fname')
-#         lname = request.POST.get('lname')
-#         age = request.POST.get('age')
-#         email = request.POST.get('fname')
-#         passw = request.POST.get('pass')
-
-#     return render(request,"user_signup.html")
 
 def movie_detail(request,id):
     context = {}
@@ -118,6 +102,19 @@ def checkout(request):
         context['show'] = showinfo
 
     return render(request,"checkout.html",context)
+
+@user_passes_test(user_login_required, login_url='/accounts/usersignin')
+def userbookings(request):
+    booking_table = booking.objects.filter(user=request.user).select_related().order_by('-booked_date').values_list('show_date','booked_date','show__movie__movie_name','show__showtime','total','seat_num',named=True)
+    
+    context = {
+        'data':booking_table
+    }
+    return render(request,"bookings.html",context)
+
+# class userBookings(ListView):
+#     # specify the model for list view
+#     model = booking
 
 def booked_ok(request):
     context = {}
