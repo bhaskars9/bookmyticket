@@ -141,7 +141,9 @@
   <div class="carousel-inner">
     {% for banner in banners %}
     <div class="carousel-item {{ forloop.counter0|active1}}">
+      <a href="detail/{{ banner.movie__id }}">
       <img class="d-block w-100" style="height: 350px;object-fit:cover;" src="{{ banner.url }}" alt="First slide">
+      </a>
       <div class="carousel-caption d-none d-md-block">
          <h5>{{ banner.movie__movie_name}}</h5>
       </div>

@@ -22,7 +22,7 @@ def index(request):
 
 def home(request):
     movies = film.objects.filter().values_list('id','movie_name','url', named=True)
-    banners = banner.objects.filter().select_related().values_list('movie__movie_name','url', named=True)
+    banners = banner.objects.filter().select_related().values_list('movie__id','movie__movie_name','url', named=True)
     context = {
     'films': movies,
     'banners':banners
@@ -134,7 +134,7 @@ def userbookings(request):
     if(request.method == "GET" and len(request.GET)!=0):
         msg = request.GET['ack']
 
-    booking_table = booking.objects.filter(user=request.user).select_related().order_by('-booked_date').values_list('id','show_date','booked_date','show__movie__movie_name','show__showtime','total','seat_num',named=True)
+    booking_table = booking.objects.filter(user=request.user).select_related().order_by('-booked_date').values_list('id','show_date','booked_date','show__movie__movie_name','show__movie__url','show__showtime','total','seat_num',named=True)
     
     context = {
         'data':booking_table,

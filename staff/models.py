@@ -30,6 +30,5 @@ class show(models.Model):
     showtime = models.TimeField(verbose_name="Showtime",auto_now=False, auto_now_add=False,blank=True, null=True)
     # modifiedby = models.OneToOneField(Account,on_delete=models.SET_NULL)
 
-
     def __str__(self):
         return self.movie.movie_name+"@"+self.showtime.strftime("%I:%M %p")

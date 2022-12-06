@@ -18,8 +18,13 @@
           table {
             text-align: center;
         }
+        .tab{
+          {% comment %} style="background-color:#04001c;" {% endcomment %}
+          background-color:black !important;
+          border:None !important;
+        }
         </style>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+
 {% endblock title %}
 
 
@@ -39,29 +44,31 @@
                 <h2 class="text-primary"  >My Bookings</h2>
             </div>
             {% if data %}
-            <table class="table table-dark table-hover">
+            <table class="table table-dark table-hover" class="tab">
                 <thead>
                   <tr>
-                    <th scope="col">Showdate</th>
-                    <th scope="col">Movie</th>
-                    <th scope="col">Showtime</th>
-                    <th scope="col">Seats</th>
-                    <th scope="col">Total ($$)</th>
-                    <th scope="col">Booked</th>
-                    <th scope="col">Status</th>
+                    <th scope="col" class="tab" ></th>
+                    <th scope="col" class="tab">Showdate</th>
+                    <th scope="col" class="tab">Movie</th>
+                    <th scope="col" class="tab">Showtime</th>
+                    <th scope="col" class="tab">Seats</th>
+                    <th scope="col" class="tab">Total ($$)</th>
+                    <th scope="col" class="tab">Booked</th>
+                    <th scope="col" class="tab">Status</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody >
                  
                     {% for row in data %}
                   <tr>
-                    <td>{{ row.show_date }}</td>
-                    <td>{{ row.show__movie__movie_name }}</td>
-                    <td>{{ row.show__showtime }}</td>
-                    <td>{{ row.seat_num }}</td>
-                    <td>${{ row.total }}</td>
-                    <td>{{ row.booked_date|tdiff }}</td>
-                    <td><a type="button" class="btn bstatusbtn" data-id="{{ row.id }}" >
+                    <td style="padding:5px" class="tab"><img src="{{ row.show__movie__url }}"  style="height:50px;width:40px;"></td>
+                    <td class="tab">{{ row.show_date }}</td>
+                    <td class="tab">{{ row.show__movie__movie_name }}</td>
+                    <td class="tab">{{ row.show__showtime }}</td>
+                    <td class="tab">{{ row.seat_num }}</td>
+                    <td class="tab">${{ row.total }}</td>
+                    <td class="tab">{{ row.booked_date|tdiff }}</td>
+                    <td class="tab"><a type="button" class="btn bstatusbtn" data-id="{{ row.id }}" >
                       {{ row.show_date|bstatus }}
                     </a></td>
                   </tr>
