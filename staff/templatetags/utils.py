@@ -44,6 +44,13 @@ def tformat(dtime):
         return str(int(secs/3600))+" hours ago"
     else:
         return str(diff.days)+" days ago"
+
+@register.filter(name="bstatus")
+def booking_status(date):
+    if(date>date.today()):
+        return "Cancel"
+    else:
+        return "watched"
 @register.filter(name="active1")
 def setfirstasactive(num):
     if (num==0):

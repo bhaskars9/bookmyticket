@@ -71,6 +71,22 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
+
+.showcase {
+  display: flex;  justify-content: space-between;  list-style-type: none;  background: rgba(0,0,0,0.1);  padding: 5px 10px;  border-radius: 5px;  color: #777;
+}
+
+.showcase li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+.showcase li small {
+  margin-left: 2px;
+}
+
 .seatindex{
   /* background-color: #444451; */
   text-align: center;

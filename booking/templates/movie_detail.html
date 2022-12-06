@@ -36,7 +36,7 @@
                     <div class="card-body">
                     {% comment %} <h5 class="card-title">Special title treatment</h5>
                     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> {% endcomment %}
-                    <a href="/show?date={{ "%Y-%m-%d"|cdate }}" class="btn btn-warning">Get Tickets</a>
+                    <a href="/show?date={{ "%Y-%m-%d"|cdateadd:"1" }}" class="btn btn-warning">Get Tickets</a>
                     </div>
                 </div>
                     
@@ -54,7 +54,7 @@
                     <em class="pull-left">Available at times&nbsp;</em>
                     <br>
                     {% for show in showtimes %}
-                    <a href="/show?date={{ "%Y-%m-%d"|cdate }}"  style="padding-left:20px;padding-right:20px;margin-right:10px;" class="btn btn-primary" rel="nofollow"  >{{ show.showtime }}</a>
+                    <a href="/show?date={{ "%Y-%m-%d"|cdateadd:"1" }}"  style="padding-left:20px;padding-right:20px;margin-right:10px;" class="btn btn-primary" rel="nofollow"  >{{ show.showtime|tformat:"%I:%M %p" }}</a>
                     {% endfor %}
                     {% else %}
                     <em class="pull-left">No shows Available, Check later&nbsp;</em>

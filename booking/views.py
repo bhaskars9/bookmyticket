@@ -1,5 +1,5 @@
 from multiprocessing import context
-from django.shortcuts import render
+from django.shortcuts import HttpResponseRedirect, render
 from django.http import HttpResponse
 from django.forms import formset_factory,modelformset_factory
 from staff.models import *
@@ -8,6 +8,10 @@ from django.views.generic.list import ListView
 from accounts.views import is_user, user_login_required
 from django.contrib.auth.decorators import (user_passes_test)
 from .models import *
+
+from django.core.mail import EmailMessage
+from django.conf import settings
+from django.template.loader import render_to_string
 
 # Create your views here.
 def index(request):
@@ -79,6 +83,26 @@ def bookedseats(request):
     else:
            return HttpResponse("Request method is not a GET")
 
+
+
+def sendEmail(request,message):
+    template ="Hello "+request.user.username+'\n'+message
+
+    user_email = request.user.email
+
+    email = EmailMessage(
+        'Tickets Confirmation Email', #Subject
+        template,
+        settings.EMAIL_HOST_USER,
+        [user_email],
+    )
+
+    email.fail_silently = False
+    email.send()
+
+    return True
+
+
 def checkout(request):
     context = {}
     if (request.method == "POST"):
@@ -100,17 +124,34 @@ def checkout(request):
         context['sdate'] = show_date
         context['seats'] = seats
         context['show'] = showinfo
-
+        message="\nYour tickets are successsfully booked. Here are the details. \nThe movie is {}. \nThe show is on {}. \nThe show starts at {}. \nYour seat numbers are {}. \n\nThank you,\nBookMyTicket".format(context["film"], show_date,showinfo.showtime,seats)
+        sendEmail(request,message)
     return render(request,"checkout.html",context)
 
 @user_passes_test(user_login_required, login_url='/accounts/usersignin')
 def userbookings(request):
-    booking_table = booking.objects.filter(user=request.user).select_related().order_by('-booked_date').values_list('show_date','booked_date','show__movie__movie_name','show__showtime','total','seat_num',named=True)
+    msg=""
+    if(request.method == "GET" and len(request.GET)!=0):
+        msg = request.GET['ack']
+
+    booking_table = booking.objects.filter(user=request.user).select_related().order_by('-booked_date').values_list('id','show_date','booked_date','show__movie__movie_name','show__showtime','total','seat_num',named=True)
     
     context = {
-        'data':booking_table
+        'data':booking_table,
+        'msg':msg
     }
     return render(request,"bookings.html",context)
+
+@user_passes_test(user_login_required, login_url='/accounts/usersignin')
+def cancelbooking(request,id):
+    bobj =  booking.objects.get(id=id)
+    message="\nYour tickets are succcessfully Cancelled. Here are the details.\nYour show info{}\nYour Show date {}\nYour seats\n\nThank you,\nBookMyTicket".format(bobj.show,bobj.show_date,bobj.seat_num)
+    ack = "Your tickets {} for {} are cancelled successfully".format(bobj.seat_num,bobj.show)
+    bobj.delete()
+    sendEmail(request,message)
+    
+    return HttpResponseRedirect("/mybookings?ack="+ack)
+
 
 # class userBookings(ListView):
 #     # specify the model for list view

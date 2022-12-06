@@ -27,7 +27,7 @@ def user_signup(request):
         if form.is_valid():
             user = form.save()
             msg = 'user created'
-            return redirect('/accounts/userlogin')
+            return redirect('/accounts/usersignin')
         else:
             msg = 'form is not valid'
     else:
@@ -48,10 +48,6 @@ def admin_signup(request):
             user = form.save(commit=False)
             user.is_staff = True
             user.save()
-            # form.add(is_staff=True)
-            # user = form.save()
-            # user.set is_staff = True
-            # user.groups.add(Group.objects.get(name='customer'))
             msg = 'user created'
             return redirect('/accounts/adminlogin')
         else:

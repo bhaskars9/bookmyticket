@@ -29,6 +29,12 @@
 {% comment %} <p> Raw Dataset: {{ data }} </p> {% endcomment %}
     <div class="container" id="movie-content">        
             {% comment %} Raw Queryset    {{ showtimes }} {% endcomment %}
+            {% if msg %}
+            <div class="alert alert-success alert-dismissible fade show" id="messageblk" role="alert">
+              <strong>Holy guacamole!</strong> {{ msg }}
+              <button type="button" class="btn-close messagealert" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
             <div class="row">
                 <h2 class="text-primary"  >My Bookings</h2>
             </div>
@@ -42,6 +48,7 @@
                     <th scope="col">Seats</th>
                     <th scope="col">Total ($$)</th>
                     <th scope="col">Booked</th>
+                    <th scope="col">Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -54,6 +61,9 @@
                     <td>{{ row.seat_num }}</td>
                     <td>${{ row.total }}</td>
                     <td>{{ row.booked_date|tdiff }}</td>
+                    <td><a type="button" class="btn bstatusbtn" data-id="{{ row.id }}" >
+                      {{ row.show_date|bstatus }}
+                    </a></td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -64,6 +74,68 @@
 
     </div>
 
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bgdark">
+              <div class="modal-header"  style="border-bottom: None;">
+                <h5 class="modal-title" id="exampleModalLongTitle">Are you sure you want to cancel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Confirm your want to cancel your tickets by clicking Confirm.
+              </div>
+              <div class="modal-footer" style="border-top:None">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a hre="#" class="btn btn-danger" id="finalConfirm" >Confirm</a>
+              </div>
+            </div>
+          </div>
+        </div>
 
 {% endblock content %}
         
+{% block js %}
+<script>
+$( document ).ready(function() {
+
+  $(".bstatusbtn").each(function(){
+    val = $(this).text();
+    if(val.includes("Cancel")){
+      console.log("cancel");
+      $(this).addClass("btn");
+      $(this).addClass("btn-danger");
+    }
+    else if (val.includes("watched")){
+      console.log("watched");
+      $(this).removeClass("bstatusbtn");
+
+    }
+  
+    
+  });
+
+
+$(".bstatusbtn").click(function(){
+  val = $(this).text();
+  if(val.includes("Cancel")){
+    console.log("cancel");
+    bid = $(this).attr("data-id");
+    console.log(bid);
+    $("#finalConfirm").attr('href','/cancelbooking/'+bid)
+  }
+  else if (val.includes("watched")){
+    console.log("watched");
+  }
+
+  $('#exampleModalCenter').modal('show');
+});
+
+$('.messagealert').click(function(){
+  $("#messageblk").hide();
+});
+});
+</script>
+{% endblock %}

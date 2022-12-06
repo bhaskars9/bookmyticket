@@ -8,15 +8,17 @@
 {% endblock %}
 
 {% block content %}
-<div class="container text-success">
-<h1> Your show info is 
+<div class="container text-success text-center" id="movie-content">
+    <h1>Tickets Booked Successfully</h1>
+<h2> Your show info is 
     {% if show %} 
             {{ show.showtime }} |
             {{ show.movie }} 
 
-    {% endif %} </h1>
-<h1> Your film is {% if film %} {{ film.movie_name }} {% endif %} </h1>
-<h1> Your ticket are {% if seats %} {{ seats }} {% endif %} </h1>
-<h1> Your ticket are {% if sdate %} {{ sdate }} {% endif %} </h1>
+    {% endif %} </h2>
+<h2> Your show is on {% if sdate %} {{ sdate }} {% endif %} </h2>
+{% comment %} <h2> Your film is {% if film %} {{ film.movie_name }} {% endif %} </h2> {% endcomment %}
+<h2> Your ticket are {% if seats %} {{ seats }} {% endif %} </h2>
+<a class="btn btn-primary" href="/mybookings" >Go to Bookings<a>
 </div>
 {% endblock %}

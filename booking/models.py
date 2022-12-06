@@ -8,15 +8,7 @@ from accounts.models import Account
 from datetime import datetime
 
 
-class reservation(models.Model):
-    show = models.ForeignKey(show,on_delete=models.CASCADE)
-    seat_no = models.CharField(max_length=10)
-    expry = models.DateTimeField()
-    booked = models.BooleanField(default=False)
-    user = models.ForeignKey(Account,on_delete=models.DO_NOTHING)
 
-    def __str__(self) -> str:
-        return self.seatno
 
 class booking(models.Model):
     booking_code = models.CharField(max_length=100)
