@@ -15,7 +15,6 @@
             border-radius:0px;
           }
           .modal-content{
-            {% comment %} background-color: #242333; {% endcomment %}
             background-color:black;
             color:white;
           }
@@ -45,10 +44,6 @@
                 <label for="selectdate" class="text-secondary col-sm-2 col-form-label">Select Date</label>
                 <div class="col-sm-4">
                 <input type="date"  name="date" class="form-control datebox"  value="{% if date %}{{ date }}{% else %}{{"%Y-%m-%d"|cdateadd:"1" }}{% endif %}"   min="{{ "%Y-%m-%d"|cdateadd:"1" }}" max="{{ "%Y-%m-%d"|cdateadd:"30" }}" id="selectdate" value="">
-                {% comment %} <input data-provide="datepicker"> {% endcomment %}
-                <script>
-                  
-                </script>
                 </div>
                 
             </div>
@@ -78,15 +73,11 @@
                 {% endfor %}
               {%endif%}
         </div>
-        <!-- Seat -->
-
-        
-
+       
     </div>
 
 
 </div>
-
               <!-- Seat Booking -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
@@ -200,16 +191,6 @@
                         </li>    
                       </ul>
                       
-                      {% comment %} <p>
-                        <span id="clearselected" style="cursor: pointer;">clear</span>
-                      </p>
-                      <p class="tex2t">
-                        You have selected <span id="count">0</span> seats for the price of $<span
-                          id="total"
-                          >0</span
-                        >!
-                      </p> {% endcomment %}
-                  
                       
                     </div>
                   </div>
@@ -223,11 +204,7 @@
                     </form>
                       <button type="button" class="btn btn-primary btn-block bookticketsbtn">Book Tickets</button>
                       <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
-
-                        <!--
-                          <button type="button" class="btn btn-primary btn-block bookticketsbtn">Book Tickets</button>
-                          <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
-                          -->                                  
+                          
                   </div>
                 </div>
               </div>
@@ -237,102 +214,102 @@
 
 <!-- JS -->
 {% block js%}
-<script>
-    $( document ).ready(function() {
-        // update movies based on 
-        
-        
-        $("#selectdate").change(function() {
-            console.log($(this).val());
-            console.log("date changed");
-            $("#dateform").submit();
-        });
 
-        $(".showtimebtn").click(function(){
-          // Show Seats event
-          seats();
-
-
-          var show_id;
-          show_id = $(this).attr("data-showid");
-          
-          show_date = $("#show_date").val();
-          $("#show_id").val(show_id);
-          // Clear booked seats info
-          $(".seat.occupied").each(function() {
-            $(this).removeClass("occupied")
-          });
-          // clear selected seat info
-          $(".seat.selected").each(function() {
-            $(this).removeClass("selected")
-          });
-          seats();
-
-          console.log(show_id);
-          // Also add to input with type hidden
-          $.ajax(
-          {
-              type:"GET", url: "bookedseats", data:{ show_id: show_id,show_date: show_date},
-              success: function(data) 
-              {
-                  console.log(data)  
-                  if(data.length !=0){
-                    //console.log("not empty");
-                    booked = data.split(",");
-                    console.log(booked);
-                    for (id in booked){
-                      $(".seat[sno|="+booked[id]).addClass("occupied");
-                    }
-
-                    
-                  }
-                  else {
-                    console.log("empty");
-                  }
-
-              }
-          })
-
-          $('#exampleModalCenter').modal('show');
-          
-        });
-        
-
-        $(".seat").click(function (){
-          if (!$(this).hasClass("occupied")){
-            //if ($(this).hasClass("selected")){
-            console.log($(this).attr("sno"));
-            $(this).toggleClass("selected"); //toggles selected class
-            seats();
-          }
-        });
-
-
-        function seats(){
-          // updates seats input field with selected seats
-          var selected=[];
-           $(".seat").each(function( index ) {
-            if ($(this).hasClass("selected")){
-              selected.push($(this).attr("sno"));
-            }
-          });
-          console.log(selected);
-          $("#seats_input").val(selected);
-          return selected;
-        }
-
-
-        $(".bookticketsbtn").click(function(){
-          $( "#target_form" ).submit();
-          console.log("Button clicked");
-        });
-        
-        
-
-        $("#clearselected").click(function(){
-          //clear all selected seats
-        });
+<script >
+  $( document ).ready(function() {
+    // update movies based on 
+    
+    
+    $("#selectdate").change(function() {
+        console.log($(this).val());
+        console.log("date changed");
+        $("#dateform").submit();
     });
+
+    $(".showtimebtn").click(function(){
+      // Show Seats event
+      seats();
+
+
+      var show_id;
+      show_id = $(this).attr("data-showid");
+      
+      show_date = $("#show_date").val();
+      $("#show_id").val(show_id);
+      // Clear booked seats info
+      $(".seat.occupied").each(function() {
+        $(this).removeClass("occupied")
+      });
+      // clear selected seat info
+      $(".seat.selected").each(function() {
+        $(this).removeClass("selected")
+      });
+      seats();
+
+      console.log(show_id);
+      // Also add to input with type hidden
+      $.ajax(
+      {
+          type:"GET", url: "bookedseats", data:{ show_id: show_id,show_date: show_date},
+          success: function(data) 
+          {
+              console.log(data)  
+              if(data.length !=0){
+                //console.log("not empty");
+                booked = data.split(",");
+                console.log(booked);
+                for (id in booked){
+                  $(".seat[sno|="+booked[id]).addClass("occupied");
+                }
+
+                
+              }
+              else {
+                console.log("empty");
+              }
+
+          }
+      })
+
+      $('#exampleModalCenter').modal('show');
+      
+    });
+    
+
+    $(".seat").click(function (){
+      if (!$(this).hasClass("occupied")){
+        //if ($(this).hasClass("selected")){
+        console.log($(this).attr("sno"));
+        $(this).toggleClass("selected"); //toggles selected class
+        seats();
+      }
+    });
+
+
+    function seats(){
+      // updates seats input field with selected seats
+      var selected=[];
+       $(".seat").each(function( index ) {
+        if ($(this).hasClass("selected")){
+          selected.push($(this).attr("sno"));
+        }
+      });
+      console.log(selected);
+      $("#seats_input").val(selected);
+      return selected;
+    }
+
+
+    $(".bookticketsbtn").click(function(){
+      $( "#target_form" ).submit();
+      console.log("Button clicked");
+    });
+    
+    
+
+    $("#clearselected").click(function(){
+      //clear all selected seats
+    });
+});
 </script>
-<script src="{% static 'js/seat_selection2.js' %}"></script>
 {% endblock js%}

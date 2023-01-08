@@ -20,7 +20,7 @@ class banner(models.Model):
     url = models.URLField(verbose_name="Banner Image URL",blank=True, null=True)
     modified = models.DateTimeField(auto_now=True, blank=True, null=True)
     def __str__(self):
-        return self.movie_name
+        return self.movie.movie_name
 
 class show(models.Model):
     movie = models.ForeignKey(film,verbose_name="Movie",on_delete=models.CASCADE,blank=True,null=True)

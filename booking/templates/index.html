@@ -6,8 +6,6 @@
 <!-- Header -->
 {% block title %}
         <title>Welcome</title>
-        {% comment %} <link rel="stylesheet" href="{% static 'css/seat_selection.css' %}"> {% endcomment %}
-        {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"> {% endcomment %}
         <style>
             body{
                 display: flex;
@@ -78,135 +76,77 @@
 
 
 {% block content %}
-{% comment %} <div class="container">
 
-  
-  <div id="carouselExample" class="carousel slide w-100" data-bs-ride="carousel" data-bs-interval="2500">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></button>
-      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"></button>
-      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"></button>
-      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3"></button>
-    </div>
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img class="d-block w-100" style="height: 350px;object-fit:cover;" src="https://www.dc.com/sites/default/files/Char_Gallery_Batman_DTC1018_6053f2162bdf03.97426416.jpg" alt="First slide">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Movie One</h5>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img class="d-block w-100" style="height: 350px;object-fit:cover;" src="https://www.herzogcompany.com/wp-content/uploads/HCO_CaseBanner_TGM-2048x640.jpg" alt="Second slide">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Movie Two</h5>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img class="d-block w-100" style="height: 350px;object-fit:cover;" src="https://m.media-amazon.com/images/M/MV5BMDE0ZjMzOTAtMzU2OS00ZDVmLWFlMjYtMThlOWYwMDBiN2E3XkEyXkFqcGdeQWFsZWxvZw@@._V1_.jpg" alt="Third slide">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Movie Three</h5>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img class="d-block w-100" style="height: 350px;object-fit:cover;" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjaUnhOpvHtBIOUt39DEFqzwt6RrlbB8tRosN3Ru4JpK2z_L7M4FGSVWAwmHlK8rCEWd89dq24Ysl7PDVJ9YEtk532MhCkbAmHeu4ZogU6Hm6JznMEj6WZ5roCGN8V_exyzA-c-n92Pi9xNCjEfUKQN2-C8rrmI53Cvdcrz0ub9WcnDYZuQwNjmINJ4sA/s1600/HDgallery%20RRR%20in%20Theatres%20%282%29.jpg" alt="Third slide">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Movie Four</h5>
-            <!--<p>University Campus</p> -->
-        </div>
-    </div>
-
-
- 
-<button class="carousel-control-prev" data-bs-target="#carouselExample" type="button" data-bs-slide="prev">
-  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-  <span class="visually-hidden">Previous</span>
-</button>
-<button class="carousel-control-next" data-bs-target="#carouselExample" type="button" data-bs-slide="next">
-  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-  <span class="visually-hidden">Next</span>
-</button>
-</div>
-</div> {% endcomment %}
-
-
+{% comment %} Banner Code {% endcomment %}
 {% if banners %}
 <div class="container">
-<div id="carouselExample" class="carousel slide w-100" data-bs-ride="carousel" data-bs-interval="2500">
-  <div class="carousel-indicators">
-    {% for x in banners %}
-    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="{{ forloop.counter0 }}" class="{{ forloop.counter0|active1}}"></button>
-    {% endfor %}
-  </div>
-  
-  <div class="carousel-inner">
-    {% for banner in banners %}
-    <div class="carousel-item {{ forloop.counter0|active1}}">
-      <a href="detail/{{ banner.movie__id }}">
-      <img class="d-block w-100" style="height: 350px;object-fit:cover;" src="{{ banner.url }}" alt="First slide">
-      </a>
-      <div class="carousel-caption d-none d-md-block">
-         <h5>{{ banner.movie__movie_name}}</h5>
-      </div>
+  <div id="carouselExample" class="carousel slide w-100" data-bs-ride="carousel" data-bs-interval="2500">
+    
+    <div class="carousel-indicators">
+      {% for x in banners %}
+      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="{{ forloop.counter0 }}" class="{{ forloop.counter0|active1}}"></button>
+      {% endfor %}
     </div>
-    {% endfor %}
+  
+    <div class="carousel-inner">
+      {% for banner in banners %}
+      <div class="carousel-item {{ forloop.counter0|active1}}">
+        <a href="detail/{{ banner.movie__id }}">
+        <img class="d-block w-100" style="height: 350px;object-fit:cover;" src="{{ banner.url }}" alt="First slide"></a>
+        <div class="carousel-caption d-none d-md-block">
+          <h5>{{ banner.movie__movie_name}}</h5>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <button class="carousel-control-prev" data-bs-target="#carouselExample" type="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+  
+    <button class="carousel-control-next" data-bs-target="#carouselExample" type="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+
   </div>
-
-
-  <button class="carousel-control-prev" data-bs-target="#carouselExample" type="button" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" data-bs-target="#carouselExample" type="button" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-</div>
 </div>
 {% endif %}
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <section class="py-5 content">
-
-        <div class="container">
-
-          <div class="row">
-            <h2 class="text-primary" > Now Showing </h2>
-        </div>
+<section class="py-5 content">
+  <div class="container">
     
-
-
-            <div class="row"> 
-            {% if films %}
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                
-            {% for film in films %}
-                
-                
-                
-                <div class="col-md-4">
-                    <a href="detail/{{ film.id }}">
-                    <div class="card card-01 height-fix fitimage2">
-                        <img class="card-img-top fitimage2" src="{{ film.url }}" alt="{{ film.movie_name }} image">
-                        <div class="card-img-overlay">
-                            <h4 class="card-title"><strong>{{ film.movie_name }}</strong></h4>
-                        </div>
-                    </div>
-                    </a>
-                  </div>
-
-            {% endfor %}
-            
-
-                    
-            
-
+    <div class="row">
+      <h2 class="text-primary" > Now Showing </h2>
+    </div>
+    
+    <div class="row"> 
+      {% if films %}
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+          {% for film in films %}
+            <div class="col-md-4">
+              <a href="detail/{{ film.id }}">
+                <div class="card card-01 height-fix fitimage2">
+                  <img class="card-img-top fitimage2" src="{{ film.url }}" alt="{{ film.movie_name }} image">
+                  <div class="card-img-overlay"><h4 class="card-title"><strong>{{ film.movie_name }}</strong></h4></div>
                 </div>
+              </a>
             </div>
-                {% else %}
-            <h1> There are no shows currently running </h1>
-            <h5> try again later . . . </h5>
-            {% endif %}
-            </div>
-        </section>
+          {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <h1> There are no shows currently running </h1>
+        <h5> try again later . . . </h5>
+      {% endif %}
+    </div>
+    
+</section>
+
 {% endblock content %}
 
 {% block footer %}

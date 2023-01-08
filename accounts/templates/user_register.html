@@ -5,7 +5,7 @@
 {% load crispy_forms_tags %}
 
 
-<!-- Header -->
+
 {% block title %}
 <title>User signup</title>
 {% endblock %}
@@ -20,11 +20,6 @@
       Account
     {% endif %}
     <div class="card-text">
-      <!--
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
-      
-      <!-- Form starts -->
-      
       <form method="post">
         {% csrf_token %}
             {{form|crispy}}
@@ -33,13 +28,7 @@
               Already have an account? <a href="/accounts/usersignin">Login here</a>
             </div>
         </form>
-
-      <!-- Form ends -->
-      
     </div>
   </div>
 </div>
 {% endblock content %}
-
-{% comment %} {% load static %}
-{% load crispy_forms_tags %} {% endcomment %}

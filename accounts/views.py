@@ -6,9 +6,6 @@ from django.contrib.auth.decorators import login_required,permission_required,us
 # Create your views here.
 
 
-def index(request):
-    return render(request, 'account_index.html')
-
 def staff_required(user):
     return user.is_authenticated and  user.is_staff
 
@@ -33,28 +30,6 @@ def user_signup(request):
     else:
         form = SignUpForm()
     return render(request,'user_register.html', {'form': form, 'msg': msg})
-
-def admin_signup(request):
-    if request.user.is_authenticated and request.user.is_staff:
-        return redirect('/admin')
-    elif request.user.is_authenticated: # redirect user to home page ;)
-        return redirect('/')
-    
-    msg = None
-    # account_type = "Admin"
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.is_staff = True
-            user.save()
-            msg = 'user created'
-            return redirect('/accounts/adminlogin')
-        else:
-            msg = 'form is not valid'
-    else:
-        form = SignUpForm()
-    return render(request,'admin_signup.html', {'form': form, 'msg': msg})
 
 
 def user_login(request):
