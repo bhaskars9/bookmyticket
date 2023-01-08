@@ -7,6 +7,15 @@ An Application to book movie tickets.
 The application has two users Theatre staff and users who book tickets. The theatre staff can Create, Update, Delete Movies and add Shows for each movie on any day. 
 The end users can book tickets after creating an account. The application is developed using Django the database used is PostgreSQL. 
 
+## UI Preview
+
+User End / Customer / Booking App (gif @1fps)
+![movie ticket project](https://user-images.githubusercontent.com/37036491/211182417-084e8044-2733-4272-ab7e-7c50ce8f5a89.gif)
+
+Admin End / Theatre Staff (gif @1fps)
+![movie ticket project 2](https://user-images.githubusercontent.com/37036491/211182565-7e12ab00-0f85-448a-be37-76fd35195167.gif)
+
+
 ## Getting Started
 
 ### Dependencies
@@ -17,7 +26,6 @@ pip install -r requirements.txt
 ```
 
 ### Installing (Windows)
-
 ```
 django-admin startproject movieticket
 cd movieticket
