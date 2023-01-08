@@ -18,11 +18,6 @@
   <div class="card-body">
     <h3 class="card-title text-center text-light">User Login</h3>
     <div class="card-text">
-      <!--
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
-      
-      <!-- Form starts here -->
-
       <form method="post" >
         {% csrf_token %}
             {{form|crispy}}
@@ -31,16 +26,10 @@
               Don't have an account? <a href="/accounts/userregister">Create One</a>
             </div>
         </form>
-
-      <!-- Form ends -->
-
     </div>
   </div>
 </div>
 
 {% endblock content %}
-
-{% comment %} {% load static %}
-{% load crispy_forms_tags %} {% endcomment %}
 
 

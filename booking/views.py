@@ -13,42 +13,26 @@ from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
 
-# Create your views here.
-def index(request):
-    message = """
-                Welcome to movie ticket booking system
-            """
-    return HttpResponse(message)
 
 def home(request):
     movies = film.objects.filter().values_list('id','movie_name','url', named=True)
     banners = banner.objects.filter().select_related().values_list('movie__id','movie__movie_name','url', named=True)
-    context = {
-    'films': movies,
-    'banners':banners
-    }
-    return render(request,"index.html", context)
+    return render(request,"index.html", context={'films': movies,'banners':banners})
 
 def movie_detail(request,id):
     context = {}
-    context["film"] = film.objects.get(id = id) 
-    times = show.objects.filter(movie=id,end_date__gte=date.today()).all().values_list('id','showtime',named=True)
-    # times = show.objects.filter(movie=id,end_date__gte=date.today(),start_date__lte=date.today()).all().values_list('id','showtime')
-    context['showtimes'] = times
+    context['film'] = film.objects.get(id = id) 
+    context ['showtimes'] = show.objects.filter(movie=id,end_date__gte=date.today()).all().values_list('id','showtime',named=True)
     return render(request,"movie_detail.html",context)
 
 @user_passes_test(user_login_required, login_url='/accounts/usersignin')
 def show_select(request):
-    context = {}
     if(request.method == "GET" and len(request.GET)!=0):
         
         date = request.GET['date']
-        # On a give date get all the shows running
-        # films = film.objects.filter(show__end_date__gte=date, show__start_date__lte=date).values_list('id','movie_name','url',named=True)
         films = ""
         # add showitme >= current time + 5 min
         shows = show.objects.filter(end_date__gte=date, start_date__lte=date).select_related('movie_id','movie__url','movie__movie_name').order_by('movie_id','showtime').values_list('id','price','showtime','movie','movie__url','movie__movie_name',named=True)
-        # films = film.objects.filter(end_date__gte=date).values_list('id','movie_name','url','showtime1','showtime2','showtime3', named=True)
         res_dict = {}
         
         # Grouping shows rows by movie and appending showitmes in a list
@@ -60,38 +44,36 @@ def show_select(request):
             else: 
                 #movie already exists
                 res_dict[s[5]]['showtimes'][s[0]]=s[2]            
-            #print(s['movie_name'], s['movie_url'], s['price'], s['id'])
         
-        context = {'films':res_dict,'date':date,'shows':shows}
-    
-    return render(request,"show_selection.html",context)
+    return render(request,"show_selection.html",context = {'films':res_dict,'date':date,'shows':shows})
+
 
 def bookedseats(request):
+    """
+    AJAX seat booking info retrival view funciton
+    """
     if request.method == 'GET':
            show_id = request.GET['show_id']
            show_date = request.GET['show_date']
-        #    bookedseats = {}
            seats = booking.objects.filter(show=show_id,show_date=show_date).values('seat_num')
            booked = ""
            for s in seats:
             booked+=s['seat_num']+","
-            # print(s['seat_num'])
-
-            pass
-
            return HttpResponse(booked[:-1])
     else:
            return HttpResponse("Request method is not a GET")
 
 
-
 def sendEmail(request,message):
+    """
+    Function to send Email
+    """
     template ="Hello "+request.user.username+'\n'+message
 
     user_email = request.user.email
 
     email = EmailMessage(
-        'Tickets Confirmation Email', #Subject
+        'Tickets Confirmation Email',
         template,
         settings.EMAIL_HOST_USER,
         [user_email],
@@ -99,7 +81,6 @@ def sendEmail(request,message):
 
     email.fail_silently = False
     email.send()
-
     return True
 
 
@@ -109,17 +90,12 @@ def checkout(request):
         show_date = request.POST['showdate']
         seats = request.POST['seats']
         show_id = request.POST['showid']
-
         # Get Show id
         showinfo = show.objects.get(id=show_id)
-
         num_seats = len(seats.split(","))
-        # user = Account.objects.get(id=request.user.id)
         showinfo = show.objects.get(id=show_id)
         total = showinfo.price*num_seats
-
         booking.objects.create(booking_code="Random",user=request.user,show=showinfo,show_date=show_date,booked_date=datetime.now(timezone.utc),  seat_num=seats, num_seats=num_seats,total = total)        
-
         context["film"] = film.objects.get(movie_name = showinfo.movie) 
         context['sdate'] = show_date
         context['seats'] = seats
@@ -151,13 +127,4 @@ def cancelbooking(request,id):
     sendEmail(request,message)
     
     return HttpResponseRedirect("/mybookings?ack="+ack)
-
-
-# class userBookings(ListView):
-#     # specify the model for list view
-#     model = booking
-
-def booked_ok(request):
-    context = {}
-    return render(request,"booking_ok.html",context)
 

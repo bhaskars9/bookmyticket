@@ -3,7 +3,7 @@
 {% load utils %}
 
 {% block title %}
-<title> Shows - Admin </title>
+    <title> Shows - Admin </title>
 {% endblock %}
 
 
@@ -61,25 +61,10 @@
                   <td ><img src="{{ show.movie.url }}"  style="height:50px;width:40px;"></td>
                   <td>
                       <a class="btn btn-warning" href="/admin/updateshow/{{ show.id }}">Edit</a>
-                      {% comment %} <a href="#">delete</a> {% endcomment %}
-                      <!-- Button trigger modal -->
                       <a class="btn btn-danger" href="/admin/deleteshow/{{ show.id }}" >Delete</a>
                   </td>
                 </tr>
             {% endfor %}
-            
-              <!-- Preserving Sample UI data
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-              </tr>
-                -->
-
           </tbody>
       </table>
   </div>
@@ -87,8 +72,3 @@
 
 
 {% endblock %}
-
-{% comment %} 
-{% block footer %}
-
-{% endblock %} {% endcomment %}

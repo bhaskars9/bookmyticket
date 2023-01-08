@@ -26,7 +26,6 @@
 
 {% block content %}
     <div class="container" id="movie-content">        
-            {% comment %} Raw Queryset    {{ showtimes }} {% endcomment %}
         
         <div class="row">
             
@@ -34,8 +33,6 @@
                 <div class="card text-center border-0 bgdark" style="width: 18rem;">
                     <img class="card-img-top imagestyle " src="{{ film.url }}" alt="Card image cap">
                     <div class="card-body">
-                    {% comment %} <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> {% endcomment %}
                     <a href="/show?date={{ "%Y-%m-%d"|cdateadd:"1" }}" class="btn btn-warning">Get Tickets</a>
                     </div>
                 </div>

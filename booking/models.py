@@ -22,5 +22,4 @@ class booking(models.Model):
     
     def __str__(self) -> str:
         return self.seat_num+"@"+self.show_date.strftime("%m/%d/%Y")+" "+self.show.movie.movie_name
-        # return self.seat_num+"@"+self.booked_date.strftime("%m/%d/%Y")+" "+self.show.movie.movie_name
     

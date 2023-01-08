@@ -1,0 +1,58 @@
+{% extends '../admin_base.html' %}
+{% load static %}
+{% load utils %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+<title> Delete Banner - Admin </title>
+{% endblock %}
+
+
+
+{% block content %}
+
+<h1 class="mt-4">Banner</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="/admin/banners">Banner</a></li>
+    <li class="breadcrumb-item active">Delete Banner</li>
+</ol>
+
+<div class="card mb-4">
+  <div class="card-header">
+      <h2 class="my-2">Delete Banner</h2>
+  </div>
+  <div class="card-body">
+        <!--Django Model Form-->
+      <div class="container">
+          <div class="row justify-content-md-center">
+              <div class="col-md-6">
+                  <img class="card-img-top" src="{{ object.url }} " style="width: 30rem;">
+              </div>
+              <div class="col-md-6">
+                  <h3> Film Name : {{ object }}</h3>
+                  <p> URL : {{ object.url }} </p>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <button class="btn btn-danger my-4" type="submit">Comfirm Delete</button>
+                <a class="btn btn-primary my-4" href="/admin/banners" >Go Back</a>
+              </form>
+            </div>
+          </div>
+
+      </div>
+
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% comment %} 
+{% block footer %}
+
+{% endblock %} {% endcomment %}

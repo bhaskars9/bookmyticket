@@ -3,8 +3,9 @@
 {% load utils %}
 
 {% block title %}
-<title> Movies - Admin </title>
+    <title> Movies - Admin </title>
 {% endblock %}
+
 
 
 
@@ -62,26 +63,10 @@
                   <td>
                       <a class="btn btn-primary" href="/detail/{{ film.id }}" target="_blank" >Preview</a>
                       <a class="btn btn-warning" href="/admin/updatefilm/{{ film.id }}">Edit</a>
-                      {% comment %} <a href="#">delete</a> {% endcomment %}
-                      <!-- Button trigger modal -->
                       <a class="btn btn-danger" data-id="{{ film.id }}" href="/admin/deletefilm/{{ film.id }}">Delete</a>
                   </td>
                 </tr>
             {% endfor %}
-            <!-- Modal -->
-              
-              <!-- Preserving Sample UI data
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-              </tr>
-                -->
-
           </tbody>
       </table>
   </div>
@@ -89,8 +74,3 @@
 
 
 {% endblock %}
-
-
-{% comment %} {% block footer %}
-
-{% endblock %} {% endcomment %}

@@ -19,7 +19,6 @@
             text-align: center;
         }
         .tab{
-          {% comment %} style="background-color:#04001c;" {% endcomment %}
           background-color:black !important;
           border:None !important;
         }
@@ -105,44 +104,44 @@
 {% endblock content %}
         
 {% block js %}
-<script>
-$( document ).ready(function() {
+<script >
+  $( document ).ready(function() {
 
-  $(".bstatusbtn").each(function(){
+    $(".bstatusbtn").each(function(){
+      val = $(this).text();
+      if(val.includes("Cancel")){
+        console.log("cancel");
+        $(this).addClass("btn");
+        $(this).addClass("btn-danger");
+      }
+      else if (val.includes("watched")){
+        console.log("watched");
+        $(this).removeClass("bstatusbtn");
+  
+      }
+    
+      
+    });
+  
+  
+  $(".bstatusbtn").click(function(){
     val = $(this).text();
     if(val.includes("Cancel")){
       console.log("cancel");
-      $(this).addClass("btn");
-      $(this).addClass("btn-danger");
+      bid = $(this).attr("data-id");
+      console.log(bid);
+      $("#finalConfirm").attr('href','/cancelbooking/'+bid)
     }
     else if (val.includes("watched")){
       console.log("watched");
-      $(this).removeClass("bstatusbtn");
-
     }
   
-    
+    $('#exampleModalCenter').modal('show');
   });
-
-
-$(".bstatusbtn").click(function(){
-  val = $(this).text();
-  if(val.includes("Cancel")){
-    console.log("cancel");
-    bid = $(this).attr("data-id");
-    console.log(bid);
-    $("#finalConfirm").attr('href','/cancelbooking/'+bid)
-  }
-  else if (val.includes("watched")){
-    console.log("watched");
-  }
-
-  $('#exampleModalCenter').modal('show');
-});
-
-$('.messagealert').click(function(){
-  $("#messageblk").hide();
-});
-});
+  
+  $('.messagealert').click(function(){
+    $("#messageblk").hide();
+  });
+  });
 </script>
 {% endblock %}

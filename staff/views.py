@@ -183,27 +183,13 @@ def banners(request):
 
 @user_passes_test(staff_required, login_url='/accounts/adminlogin')
 def shows(request):
-    shows = show.objects.all()
+    shows = show.objects.all().order_by('-id')
     return render(request,"shows.html",context={'shows':shows})
 
-# # @user_passes_test(staff_required, login_url='/accounts/adminlogin')
-# def add_show(request):
-#     if request.method == "POST":
-#         show_form = showForm(request.POST, request.FILES)
-#         if show_form.is_valid():
-#             show_form.save()
-#         else:
-#             messages.error(request, 'Error saving form')
-#         # return redirect("webadmin:homepage")
-#         return HttpResponseRedirect("/admin/shows")
-#     show_form = showForm()
-#     shows = show.objects.all()
-#     return render(request=request, template_name="add_show.html", context={'show_form':show_form, 'shows':shows})
-
 # @user_passes_test(staff_required, login_url='/accounts/adminlogin')
-def bookings(request):
-    context = {}
-    return render(request,"bookings.html",context)
+# def bookings(request):
+#     context = {}
+#     return render(request,"bookings.html",context)
 
 # @user_passes_test(staff_required, login_url='/accounts/adminlogin')
 def users(request):
