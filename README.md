@@ -9,10 +9,10 @@ The end users can book tickets after creating an account. The application is dev
 
 ## UI Preview
 
-User End / Customer / Booking App (gif @1fps)
+### User End / Customer / Booking App (gif @1fps)
 ![movie ticket project](https://user-images.githubusercontent.com/37036491/211182417-084e8044-2733-4272-ab7e-7c50ce8f5a89.gif)
 
-Admin End / Theatre Staff (gif @1fps)
+### Admin End / Theatre Staff (gif @1fps)
 ![movie ticket project 2](https://user-images.githubusercontent.com/37036491/211182565-7e12ab00-0f85-448a-be37-76fd35195167.gif)
 
 
