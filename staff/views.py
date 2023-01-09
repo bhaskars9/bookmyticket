@@ -16,9 +16,6 @@ from .forms import filmForm, showForm
 from .models import film, show, banner
 
 
-# from .forms import filmForm, showForm
-# from .models import film, show
-
 def handler401(request, *args, **argv):
     return render(request, '401.html', status=401)
 
@@ -44,9 +41,6 @@ def index(request):
     r_data = booking.objects.filter(show_date__gte=start_date).values_list('show_date').order_by('show_date').annotate(total=Sum('total'))
     
     booking_table = booking.objects.select_related().order_by('-booked_date').values_list('show_date','booked_date','show','total','num_seats','show__movie__movie_name','show__showtime','user__username',named=True)
-    # booking_table = booking.objects.filter(booked_date__gte=start_date).select_related('user__username').order_by('booked_date').values_list('booked_date','show','total','num_seats','user__username',named=True)
-    # shows = booking.objects.filter(booked_date__gte=start_date).select_related('show_id','movie__url','movie__movie_name').order_by('booked_date').values_list('booked_date','show','total','num_seats','user',named=True)
-
     movies_count = film.objects.all().count()
     users_count = Account.objects.filter(is_staff=False).count()
     bookings_count = booking.objects.all().count()
@@ -55,7 +49,6 @@ def index(request):
     date_labels = set(start_date + timedelta(x) for x in range(days))
     date_labels = sorted(date_labels)
     
-    # res={"dates":[],"tickets":[]}
     graph1 = {}
     data_dict = {}
     for r in b_data:
@@ -67,7 +60,6 @@ def index(request):
     graph1['dates']=",".join([ x.strftime("%b %d") for x in date_labels])
     graph1['tickets']=[data_dict[x] for x in date_labels ] 
 
- # res={"dates":[],"tickets":[]}
     graph2 = {}
     data_dict = {}
     for r in r_data:
@@ -90,10 +82,6 @@ def index(request):
         }
     
     return render(request,"dashboard.html",context)
-
-# def login(request):
-#     context = {}
-#     return render(request,"admin_login.html",context)
 
 ##################### FILM VIEWS #####################################
 
@@ -187,27 +175,8 @@ def shows(request):
     return render(request,"shows.html",context={'shows':shows})
 
 # @user_passes_test(staff_required, login_url='/accounts/adminlogin')
-# def bookings(request):
-#     context = {}
-#     return render(request,"bookings.html",context)
-
-# @user_passes_test(staff_required, login_url='/accounts/adminlogin')
 def users(request):
     context = {}
     users=Account.objects.filter(is_staff=False).all();
     return render(request,"users.html",context={'users':users})
 
-# # @user_passes_test(staff_required, login_url='/accounts/adminlogin')
-# def add_film(request):
-#     if request.method == "POST":
-#         film_form = filmForm(request.POST, request.FILES)
-#         if film_form.is_valid():
-#             film_form.save()
-#         else:
-#             messages.error(request, 'Error saving form')
-#         # return redirect("webadmin:homepage")
-#         return HttpResponseRedirect("/admin/movies")
-#     film_form = filmForm()
-#     movies = film.objects.all()
-#     return render(request=request, template_name="add_film.html", context={'movie_form':film_form, 'movies':movies})
-   
