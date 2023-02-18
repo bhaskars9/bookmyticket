@@ -7,6 +7,18 @@ An Application to book movie tickets.
 The application has two users Theatre staff and users who book tickets. The theatre staff can Create, Update, Delete Movies and add Shows for each movie on any day. 
 The end users can book tickets after creating an account. The application is developed using Django the database used is PostgreSQL. 
 
+#### Flow of app names (dependency chain, for reference)
+```
+django-admin startproject movieticket
+cd movieticket
+django-admin startapp accounts
+django-admin startapp staff
+django-admin startapp booking
+```
+- add app names, 
+- change default user model, to create custom user model
+- change database configuration in .env file file.
+
 ## UI Preview
 
 ### User End / Customer / Booking App (gif @1fps)
@@ -25,19 +37,7 @@ Python, Pip, Virtualenv, Django, Other (psycopg2-binary, crispy-bootstrap5, djan
 pip install -r requirements.txt
 ```
 
-### Installing (Windows)
-```
-django-admin startproject movieticket
-cd movieticket
-django-admin startapp accounts
-django-admin startapp staff
-django-admin startapp booking
-```
-- add app names, 
-- change default user model, 
-- change database configuration (if needed) in .env file file.
-
-### Executing program
+### Running the program
 
 ```
 Python manage.py runserver
